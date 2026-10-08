@@ -1,52 +1,59 @@
 <div align="center">
 
-# Rive Animator
+<img src="assets/banner-en.jpg" alt="rive-animator — Interactive vector runtimes that actually react before they ship" width="100%">
 
-**Interactive vector runtimes that actually react before they ship.**
+Stop fighting silent runtime bugs and blank canvases. A code-first Rive toolkit for AI coding agents and frontend developers: eight verified recipes, zero-dependency SVG-to-RML converter, pre-flight linter for silent traps, and copy-paste runtime wiring across 8 platforms.
 
-A code-first Rive toolkit and AI agent skill. Eight production-ready recipes, a zero-dependency SVG-to-RML converter, a pre-flight linter for the defects that fail silently, deep binary inspection, and copy-paste runtime wiring across 8 platforms.
-
-[![Rive](https://img.shields.io/badge/Rive-Format_7.3-000000?style=flat-square&logo=rive&logoColor=white)](https://rive.app)
+[![License: MIT](https://img.shields.io/badge/License-MIT-black.svg)](LICENSE)
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-black)](https://code.claude.com/docs)
+[![Antigravity](https://img.shields.io/badge/Antigravity-Skill-black)](https://antigravity.google)
+[![Rive](https://img.shields.io/badge/Rive-Format_7.3-black)](https://rive.app)
 [![Tests](https://img.shields.io/badge/tests-8_passed-10B981?style=flat-square)](tests/)
-[![Python](https://img.shields.io/badge/python-3.8+-3B82F6?style=flat-square&logo=python&logoColor=white)](scripts/)
-[![Dependencies](https://img.shields.io/badge/dependencies-zero-8B5CF6?style=flat-square)](#zero-dependencies)
-[![Platforms](https://img.shields.io/badge/runtimes-8_frameworks-EC4899?style=flat-square)](#universal-framework-wiring)
-[![License](https://img.shields.io/badge/license-MIT-6B7280?style=flat-square)](LICENSE)
 
-[Why](#why) · [Recipes](#recipes) · [What to ask for](#what-to-ask-for) · [Universal Wiring](#universal-framework-wiring) · [Toolchain](#toolchain) · [Install](#install)
+English · [Español](README.es.md) · [中文](README.zh-CN.md)
 
 </div>
 
 ---
 
-## Why
+## The Real Problem
 
-A `.riv` is a small interactive program, not a static image: artboards, timelines, and a state machine deciding which timeline plays and when.
+Every developer who has tried shipping interactive vector graphics knows the frustration: **a `.riv` is a compiled program, not an image.** 
 
-The failures that cost hours never throw an error:
+When motion or interactive state goes wrong in Rive, it almost never throws an error in your browser console:
+1. **The Silent Freeze:** The file compiles cleanly and mounts, but the canvas stays at `0×0` because CSS sizing was missing, or an artboard had zero dimensions (`RV012`).
+2. **The Name Mismatch Trap:** You wire `mouse_hover` in your React or Flutter component, but the state machine was authored as `mouseHover`. The runtime silently ignores your input and falls back to playing the default loop.
+3. **The Degree Disaster:** A rotation keyframe was passed `90` or `180` instead of radians (`1.5708` / `3.1416`). The asset spins at 5,000 RPM into an unrecognizable blur.
+4. **The One-Way Latch:** A toggle transitions to `active`, but the return transition was never authored. The component reacts on the first click and latches forever.
 
-1. **The file is not what was asked for.** It builds and draws something — with a state that has no return transition, a colour keyed by a `KeyFrameDouble`, an angle keyed in degrees (`90`) instead of radians (`1.5708`), or a listener pointing to nothing.
-2. **The host wires it wrong.** An input name off by one letter (`mouse_hover` vs `mouseHover`), the wrong state machine name, or a canvas container at `0×0`. The runtime plays the default timeline and says nothing.
-
-This skill fixes both. The tools catch the silent traps before compilation, inspect binaries directly from disk, and generate exact, verified copy-paste wiring for your framework of choice.
+`rive-animator` eliminates this entire class of bugs before you touch production code.
 
 ---
 
-## What to ask for
+## Two Ways In
+
+| You have | Use | What it gives you |
+|---|---|---|
+| **An SVG icon, logo, or brief** | `python3 scripts/svg2rml.py` + Rive CLI | Instant RML scene with detached cubic vertices, shapes, and active state machine |
+| **An existing `.riv` binary** | `python3 scripts/rive_lint.py` | Exact runtime state machine names, defect checks (`RV001`–`RV012`), and copy-paste code |
+
+---
+
+## What to ask your AI Assistant
 
 | Say to Claude / Antigravity | What it does |
 |---|---|
-| *"Build an interactive toggle switch in Rive that feels like physical hardware"* | Starts from `toggle-switch`, keys zero-overshoot cubic easing, authors click listener, verifies with `rive` |
-| *"Convert this SVG icon into an interactive Rive artboard"* | Runs `svg2rml.py`, creates artboard and default state machine, generates preview screenshot |
-| *"Why does this .riv file render but ignore my clicks?"* | Lints with `rive_lint.py`, diagnoses missing inputs or listeners (`RV005`), prints exact wiring |
-| *"Generate Flutter and SwiftUI wiring for mascot.riv"* | Runs `rive_lint.py mascot.riv -f all` and prints native Swift and Dart controllers |
-| *"A circular progress bar driven from 0 to 100"* | Adapts `progress-ring`, binds `progress` Number input to TrimPath, verifies easing |
+| *"Build an interactive toggle switch in Rive that feels like physical hardware"* | Starts from `toggle-switch`, sets 240ms cubic ease, authors click listener, verifies with `rive` |
+| *"Convert this SVG logo to an interactive Rive artboard"* | Runs `svg2rml.py`, creates artboard and default state machine, validates syntax |
+| *"Why does my Rive animation draw but ignore my clicks?"* | Lints with `rive_lint.py`, diagnoses missing inputs or listeners (`RV005`), prints exact wiring |
+| *"Give me Flutter / SwiftUI / React wiring for mascot.riv"* | Runs `rive_lint.py mascot.riv -f <platform>` and generates native Dart, Swift, or TypeScript |
+| *"Create a circular progress bar driven from 0 to 100"* | Adapts `progress-ring`, binds `progress` Number input to TrimPath, verifies easing |
 
 ---
 
-## Recipes
+## Shipped Recipes
 
-`examples/` provides eight tested, verified recipes with `scene.rml`, `rive.yaml`, and compiled `.riv` binaries:
+`examples/` holds eight production-ready, verified recipes with `scene.rml`, `rive.yaml`, and compiled `.riv` binaries:
 
 <table>
 <tr>
@@ -105,111 +112,59 @@ This skill fixes both. The tools catch the silent traps before compilation, insp
 python3 scripts/rive_lint.py mascot.riv --framework <platform>
 ```
 
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│                                                                        │
-│   React          Vue 3          Svelte         Web Canvas              │
-│   Flutter        SwiftUI (iOS)  Android Kotlin React Native            │
-│                                                                        │
-└────────────────────────────────────────────────────────────────────────┘
-```
+Supported platforms:
+- **React** (`@rive-app/react-canvas`): Hooks with `useRive` and `useStateMachineInput`.
+- **Vue 3** (`@rive-app/canvas`): Composition API with `ref`, `onMounted`, and canvas resize.
+- **Svelte** (`@rive-app/canvas`): Reactive canvas binding and lifecycle cleanup.
+- **Vanilla Web Canvas** (`@rive-app/canvas`): Direct HTML5 canvas mounting.
+- **Flutter** (`rive`): StateMachineController with typed `SMIBool`, `SMINumber`, `SMITrigger`.
+- **SwiftUI / iOS** (`RiveRuntime`): Native `RiveViewModel` with state machine bindings.
+- **Android Kotlin** (`app.rive:rive-android`): `RiveAnimationView` with typed state setters.
+- **React Native** (`@rive-app/react-native`): Mobile canvas ref with touch gesture handlers.
 
-### React (`@rive-app/react-canvas`)
-```tsx
-import { useRive, useStateMachineInput } from '@rive-app/react-canvas';
-
-const { rive, RiveComponent } = useRive({
-  src: '/toggle-switch.riv',
-  stateMachines: 'State Machine 1',
-  autoplay: true,
-});
-const tap = useStateMachineInput(rive, 'State Machine 1', 'tap');
-// tap.fire();
-```
-
-### Flutter (`rive`)
-```dart
-import 'package:rive/rive.dart';
-
-SMITrigger? _tap;
-void _onRiveInit(Artboard artboard) {
-  final controller = StateMachineController.fromArtboard(artboard, 'State Machine 1');
-  if (controller != null) {
-    artboard.addController(controller);
-    _tap = controller.findInput('tap') as SMITrigger?;
-  }
-}
-// RiveAnimation.asset('assets/toggle-switch.riv', onInit: _onRiveInit)
-```
-
-### SwiftUI / iOS (`RiveRuntime`)
-```swift
-import SwiftUI
-import RiveRuntime
-
-@StateObject private var rive = RiveViewModel(
-    fileName: "toggle-switch",
-    stateMachineName: "State Machine 1",
-    autoPlay: true
-)
-// In Body: rive.view().frame(width: 240, height: 160)
-// rive.triggerInput("tap")
-```
-
-See [references/universal-framework-wiring.md](references/universal-framework-wiring.md) for Vue 3, Svelte, Vanilla Web, Android Kotlin, and React Native.
+See [references/universal-framework-wiring.md](references/universal-framework-wiring.md) for full examples.
 
 ---
 
-## Toolchain
+## Toolchain Overview
 
 Zero external dependencies. Pure Python 3.8+ standard library.
 
-### 1. SVG to RML Converter (`scripts/svg2rml.py`)
-Converts any SVG into an RML scene with detached cubic vertices, parametric shapes, fills, strokes, and a default state machine:
-```bash
-python3 scripts/svg2rml.py logo.svg --size 240 -o my-icon/scene.rml
 ```
-
-### 2. Pre-flight RML Linter (`scripts/rml_lint.py`)
-Catches errors in milliseconds before compiling with `rive`:
-- Detects rotation values authored in degrees (> 2π) instead of radians
-- Catches `KeyFrameDouble` placed on Color properties
-- Identifies empty `<Fill>` tags lacking paint children
-- Warns on missing `defaultStateMachineId`
-```bash
-python3 scripts/rml_lint.py scene.rml
-```
-
-### 3. Binary Inspector & Linter (`scripts/rive_lint.py`)
-Reads runtime `.riv` binaries using the exact registry decoding rules of `rive-runtime`:
-```bash
-python3 scripts/rive_lint.py public/mascot.riv
-python3 scripts/rive_lint.py public/mascot.riv --json
-python3 scripts/rive_lint.py public/mascot.riv --framework all
+scripts/
+├── rive_lint.py     # Binary inspector, defect audit, 8-framework wiring generator
+├── rml_lint.py      # Pre-flight XML validator for degrees vs radians, colors, gotchas
+├── svg2rml.py       # Direct zero-dependency SVG to RML artboard converter
+├── lottie2rml.py    # Lottie JSON to RML converter with detached cubic vertices
+├── svgpath.py       # Pure-Python SVG cubic bezier decomposition engine
+└── svg2lottie.py    # Internal vector geometry tokenizer
 ```
 
 ---
 
 ## Defect Ledger
 
-| Code | Level | Description |
-|---|---|---|
-| `RV001` | Error | Binary is corrupted, truncated, or invalid Rive header |
-| `RV002` | Warning | Format version higher than runtime support |
-| `RV003` | Error | No artboard present; canvas stays empty |
-| `RV004` | Info | Artboard has no state machine; only plays static timelines |
-| `RV005` | Info | State machine has no inputs and no listeners; cannot react |
-| `RV006` | Warning | Duplicate input name or inputs differing only by casing/spacing |
-| `RV007` | Info | Artboard has no default state machine specified |
-| `RV008` | Warning | Embedded font or bitmap exceeds 150 KB |
-| `RV009` | Warning | State machine has no layers; can never transition |
-| `RV010` | Warning | Timeline animation duration is 0 frames |
-| `RV011` | Warning | Input name has leading or trailing whitespace |
-| `RV012` | Error | Artboard has dimensions 0×0; will render blank or clipped |
+| Code | Level | Description | Fix |
+|---|---|---|---|
+| `RV001` | Error | Binary is corrupted, truncated, or invalid header | Re-export file; check git LFS pointer |
+| `RV002` | Warning | Format version higher than runtime support | Rebuild with current Rive CLI version |
+| `RV003` | Error | No artboard present; canvas stays empty | Author at least one `<Artboard>` |
+| `RV004` | Info | Artboard has no state machine; static timeline only | Add `<StateMachine>` so inputs can drive it |
+| `RV005` | Info | State machine has no inputs and no listeners | Add inputs or pointer listeners |
+| `RV006` | Warning | Duplicate input name or casing collision | Match exact spelling and capitalization |
+| `RV007` | Info | Artboard has no default state machine specified | Set `defaultStateMachineId` on Artboard |
+| `RV008` | Warning | Embedded font or bitmap exceeds 150 KB | Subset font or load via CDN at runtime |
+| `RV009` | Warning | State machine has no layers; can never transition | Add at least one `<StateMachineLayer>` |
+| `RV010` | Warning | Timeline animation duration is 0 frames | Author positive frame duration |
+| `RV011` | Warning | Input name has leading or trailing whitespace | Trim input names in RML |
+| `RV012` | Error | Artboard has dimensions 0×0; renders blank | Set positive width and height on Artboard |
+| `RML004` | Warning | Rotation authored in degrees (> 2π) | Use radians (`math.pi`), not degrees |
+| `RML007` | Warning | `<Fill>` tag missing paint child | Add `<SolidColor colorValue="..."/>` child |
+| `RML008` | Error | `KeyFrameDouble` placed on Color property | Use `KeyFrameColor` for color properties |
 
 ---
 
-## Install
+## Installation
 
 ### For Claude Code
 ```bash
@@ -222,8 +177,7 @@ Clone or link into your agent skills directory:
 git clone https://github.com/obeskay/rive-animator-skill.git ~/.gemini/config/skills/rive-animator
 ```
 
-### Manual Usage
-Clone the repo and use the Python tools anywhere:
+### Local Testing
 ```bash
 git clone https://github.com/obeskay/rive-animator-skill.git
 cd rive-animator-skill
