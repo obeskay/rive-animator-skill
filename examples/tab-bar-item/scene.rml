@@ -5,29 +5,36 @@
         </Fill>
 
         <Node x="60" y="60" name="IconContainer" id="0:10">
-            <Shape x="0" y="0" name="Badge" id="0:11">
-                <Rectangle width="48" height="48" cornerRadiusTL="14" cornerRadiusTR="14" cornerRadiusBL="14" cornerRadiusBR="14" originX="0.5" originY="0.5" name="Path"/>
-                <Fill name="BadgeFill">
-                    <SolidColor colorValue="FF6366F1" name="Color" id="0:12"/>
-                </Fill>
-            </Shape>
             <Shape x="0" y="0" name="Dot" id="0:13">
                 <Ellipse width="12" height="12" originX="0.5" originY="0.5" name="Path"/>
                 <Fill name="DotFill">
-                    <SolidColor colorValue="FFFFFFFF" name="White"/>
+                    <SolidColor colorValue="FFF3EEE6" name="White"/>
+                </Fill>
+            </Shape>
+            <Shape x="0" y="0" name="Badge" id="0:11">
+                <Rectangle width="48" height="48" cornerRadiusTL="14" cornerRadiusTR="14" cornerRadiusBL="14" cornerRadiusBR="14" originX="0.5" originY="0.5" name="Path"/>
+                <Fill name="BadgeFill">
+                    <SolidColor colorValue="FFC8522B" name="Color" id="0:12"/>
                 </Fill>
             </Shape>
         </Node>
 
         <LinearAnimation duration="1" name="Inactive" id="0:30">
             <KeyedObject objectId="0:12">
-                <KeyedProperty propertyKey="37"><KeyFrameColor value="FF9CA3AF" frame="0" interpolationType="hold"/></KeyedProperty>
+                <KeyedProperty propertyKey="37"><KeyFrameColor value="FF8A8178" frame="0" interpolationType="hold"/></KeyedProperty>
             </KeyedObject>
         </LinearAnimation>
 
         <LinearAnimation duration="1" name="Active" id="0:31">
             <KeyedObject objectId="0:12">
-                <KeyedProperty propertyKey="37"><KeyFrameColor value="FF6366F1" frame="0" interpolationType="hold"/></KeyedProperty>
+                <KeyedProperty propertyKey="37"><KeyFrameColor value="FFC8522B" frame="0" interpolationType="hold"/></KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+
+        <LinearAnimation duration="1" name="Rest" id="0:33">
+            <KeyedObject objectId="0:10">
+                <KeyedProperty propertyKey="16"><KeyFrameDouble value="1" frame="0" interpolationType="hold"/></KeyedProperty>
+                <KeyedProperty propertyKey="17"><KeyFrameDouble value="1" frame="0" interpolationType="hold"/></KeyedProperty>
             </KeyedObject>
         </LinearAnimation>
 
@@ -78,13 +85,13 @@
                 <AnyState x="400" y="0"/>
                 <ExitState x="500" y="0"/>
                 <EntryState x="0" y="0"><StateTransition stateToId="0:27"/></EntryState>
-                <AnimationState animationId="0:30" x="160" y="0" id="0:27">
+                <AnimationState animationId="0:33" x="160" y="0" id="0:27">
                     <StateTransition stateToId="0:28">
                         <TransitionTriggerCondition inputId="0:22"/>
                     </StateTransition>
                 </AnimationState>
                 <AnimationState animationId="0:32" x="320" y="0" id="0:28">
-                    <StateTransition stateToId="0:27"/>
+                    <StateTransition stateToId="0:27" enableExitTime="true" exitTimeIsPercetange="true" exitTime="100"/>
                 </AnimationState>
             </StateMachineLayer>
         </StateMachine>

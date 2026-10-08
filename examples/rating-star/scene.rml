@@ -8,7 +8,7 @@
             <Shape x="0" y="0" name="StarShape" id="0:11">
                 <Star width="120" height="120" points="5" innerRadius="0.4" originX="0.5" originY="0.5" name="Path"/>
                 <Fill name="StarFill">
-                    <SolidColor colorValue="FFD1D5DB" name="Color" id="0:12"/>
+                    <SolidColor colorValue="FFE4D9C6" name="Color" id="0:12"/>
                 </Fill>
             </Shape>
         </Node>
@@ -24,7 +24,7 @@
             </KeyedObject>
             <KeyedObject objectId="0:12">
                 <KeyedProperty propertyKey="37">
-                    <KeyFrameColor value="FFD1D5DB" frame="0" interpolationType="hold"/>
+                    <KeyFrameColor value="FFE4D9C6" frame="0" interpolationType="hold"/>
                 </KeyedProperty>
             </KeyedObject>
         </LinearAnimation>
@@ -52,7 +52,7 @@
             </KeyedObject>
             <KeyedObject objectId="0:12">
                 <KeyedProperty propertyKey="37">
-                    <KeyFrameColor value="FFFBBF24" frame="0" interpolationType="hold"/>
+                    <KeyFrameColor value="FFD9A441" frame="0" interpolationType="hold"/>
                 </KeyedProperty>
             </KeyedObject>
         </LinearAnimation>

@@ -39,7 +39,7 @@ def convert_svg_to_rml(
 ) -> tuple[str, list[str]]:
     """Convert SVG source (path or raw XML string) to an RML XML string."""
     if isinstance(source_path_or_text, Path):
-        source = str(source_path_or_text)
+        source = source_path_or_text.read_text(encoding="utf-8")
     else:
         source = source_path_or_text
 

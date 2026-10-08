@@ -8,7 +8,7 @@
             <Shape x="0" y="0" name="Bar1" id="0:11">
                 <Rectangle width="16" height="80" cornerRadiusTL="8" cornerRadiusTR="8" cornerRadiusBL="8" cornerRadiusBR="8" originX="0.5" originY="1.0" name="Path"/>
                 <Fill name="Fill1">
-                    <SolidColor colorValue="FFEC4899" name="Pink"/>
+                    <SolidColor colorValue="FF1E1B18" name="Pink"/>
                 </Fill>
             </Shape>
         </Node>
@@ -17,7 +17,7 @@
             <Shape x="0" y="0" name="Bar2" id="0:13">
                 <Rectangle width="16" height="80" cornerRadiusTL="8" cornerRadiusTR="8" cornerRadiusBL="8" cornerRadiusBR="8" originX="0.5" originY="1.0" name="Path"/>
                 <Fill name="Fill2">
-                    <SolidColor colorValue="FF8B5CF6" name="Purple"/>
+                    <SolidColor colorValue="FFC8522B" name="Purple"/>
                 </Fill>
             </Shape>
         </Node>
@@ -26,7 +26,7 @@
             <Shape x="0" y="0" name="Bar3" id="0:15">
                 <Rectangle width="16" height="80" cornerRadiusTL="8" cornerRadiusTR="8" cornerRadiusBL="8" cornerRadiusBR="8" originX="0.5" originY="1.0" name="Path"/>
                 <Fill name="Fill3">
-                    <SolidColor colorValue="FF3B82F6" name="Blue"/>
+                    <SolidColor colorValue="FF6F8163" name="Blue"/>
                 </Fill>
             </Shape>
         </Node>

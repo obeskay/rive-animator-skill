@@ -29,6 +29,16 @@ class TestSvg2Rml(unittest.TestCase):
         self.assertIn("<PointsPath", rml)
         self.assertIn("<CubicDetachedVertex", rml)
 
+    def test_cli_reads_svg_file(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            src = Path(tmp) / "icon.svg"
+            src.write_text('<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">'
+                           '<circle cx="12" cy="12" r="8" fill="#C8522B"/></svg>', encoding="utf-8")
+            out = Path(tmp) / "scene.rml"
+            self.assertEqual(svg2rml.main([str(src), "-o", str(out)]), 0)
+            self.assertIn("<PointsPath", out.read_text(encoding="utf-8"))
+
 
 if __name__ == "__main__":
     unittest.main()

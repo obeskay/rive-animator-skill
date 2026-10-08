@@ -8,17 +8,47 @@ Stop fighting silent runtime bugs and blank canvases. A code-first Rive toolkit 
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-black)](https://code.claude.com/docs)
 [![Antigravity](https://img.shields.io/badge/Antigravity-Skill-black)](https://antigravity.google)
 [![Rive](https://img.shields.io/badge/Rive-Format_7.3-black)](https://rive.app)
-[![Tests](https://img.shields.io/badge/tests-8_passed-10B981?style=flat-square)](tests/)
+[![Tests](https://img.shields.io/badge/tests-9_passed-10B981?style=flat-square)](tests/)
 
 English · [Español](README.es.md) · [中文](README.zh-CN.md)
 
+<br>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.gif">
+  <img src="assets/hero.gif" alt="Eight verified Rive recipes running in the real runtime with live input drivers" width="100%">
+</picture>
+
+[Gallery](#shipped-recipes) · [Animation Toolbox](references/animation-toolbox-cheatsheet.md) · [Two Ways In](#two-ways-in) · [What to Ask](#what-to-ask-your-ai-assistant) · [Framework Wiring](#universal-framework-wiring) · [Defect Ledger](#defect-ledger) · [Install](#installation)
+
 </div>
+
+---
+
+## Craft, Taste & Delight vs AI Slop
+
+A lot of vibe-coded apps feel lifeless because they settle for raw functionality and bare-bones static UI, skipping the "last mile" of polish. True delight is what separates top-tier software from AI slop.
+
+Never just ask an AI to *"add animations"*. Pick from the [11 Animation Archetypes](references/animation-toolbox-cheatsheet.md) and layer them together:
+- **Keyframes**: Choreograph fixed timeline sequences (0s–2.4s).
+- **Springs**: Give UI controls responsive physical settle with zero overshoot.
+- **Gestures**: Follow finger and cursor touch 1:1; stream coordinates into Rive `StateMachineNumber` (`tiltX`, `tiltY`).
+- **Physics**: Let dynamic forces, momentum, and bounds collisions take control.
+- **SVG Paths**: Draw, morph vector geometry, and follow curved paths.
+- **Layout Transitions**: Native FLIP / View Transitions when reordering grids and expanding cards.
+- **Rive**: Stateful interactive vector logic, multi-layer inputs, and nested artboards.
+- **Skeletal Rigs**: Pose connected characters with bone hierarchies.
+- **Particles**: Celebrate achievement milestones with confetti and starbursts.
+- **Shaders**: Direct GPU pixel transformations (glass refraction, liquid warps, dynamic blur).
+
+> **The Composition Rule:** "Pick by the job. Combine for the feeling." Real magic happens when you compose a Rive character state machine + SVG morphing background mask + 3D parallax depth + host continuous tilt + spring landing bounce + particle celebration.
 
 ---
 
 ## The Real Problem
 
 Every developer who has tried shipping interactive vector graphics knows the frustration: **a `.riv` is a compiled program, not an image.** 
+
 
 When motion or interactive state goes wrong in Rive, it almost never throws an error in your browser console:
 1. **The Silent Freeze:** The file compiles cleanly and mounts, but the canvas stays at `0×0` because CSS sizing was missing, or an artboard had zero dimensions (`RV012`).
@@ -53,51 +83,51 @@ When motion or interactive state goes wrong in Rive, it almost never throws an e
 
 ## Shipped Recipes
 
-`examples/` holds eight production-ready, verified recipes with `scene.rml`, `rive.yaml`, and compiled `.riv` binaries:
+Every animation below is compiled from `examples/` and recorded running inside the real `@rive-app/canvas-advanced` runtime driven by live scripted state machine inputs:
 
 <table>
 <tr>
 <td width="25%" align="center" valign="top">
-<b>Toggle Switch</b><br>
-<code>examples/toggle-switch</code><br>
-<sub>Hardware toggle feel, 240ms cubic ease, click listener.<br><b>Input:</b> <code>tap</code> (Trigger)<br><b>Size:</b> 540 B</sub>
+<img src="assets/toggle-switch.gif" width="220" alt="Toggle Switch"><br>
+<a href="examples/toggle-switch/scene.rml"><b>Toggle Switch</b></a><br>
+<sub>Hardware feel, 240ms cubic ease, click listener.<br><b>Input:</b> <code>tap</code> (Trigger)<br><b>Size:</b> 540 B</sub>
 </td>
 <td width="25%" align="center" valign="top">
-<b>Spinner Loader</b><br>
-<code>examples/spinner-loader</code><br>
-<sub>Circular stroke chase, continuous 60-frame loop.<br><b>Input:</b> <code>speed</code> (Number)<br><b>Size:</b> 374 B</sub>
+<img src="assets/like-heart.gif" width="220" alt="Like Button"><br>
+<a href="examples/like-heart/scene.rml"><b>Like Button</b></a><br>
+<sub>Micro-burst scale pop (0.8 &rarr; 1.25 &rarr; 1.0) and fill.<br><b>Input:</b> <code>liked</code> (Boolean)<br><b>Size:</b> 719 B</sub>
 </td>
 <td width="25%" align="center" valign="top">
-<b>Success Check</b><br>
-<code>examples/success-check</code><br>
-<sub>Settling disc with trim-draw checkmark on completion.<br><b>Input:</b> <code>fire</code> (Trigger)<br><b>Size:</b> 584 B</sub>
+<img src="assets/success-check.gif" width="220" alt="Success Check"><br>
+<a href="examples/success-check/scene.rml"><b>Success Check</b></a><br>
+<sub>Settling disc with trim-draw checkmark on completion.<br><b>Input:</b> <code>fire</code> (Trigger)<br><b>Size:</b> 591 B</sub>
 </td>
 <td width="25%" align="center" valign="top">
-<b>Like Button</b><br>
-<code>examples/like-heart</code><br>
-<sub>Micro-burst scale pop (0.8 → 1.25 → 1.0) and fill transition.<br><b>Input:</b> <code>liked</code> (Boolean)<br><b>Size:</b> 666 B</sub>
+<img src="assets/progress-ring.gif" width="220" alt="Progress Ring"><br>
+<a href="examples/progress-ring/scene.rml"><b>Progress Ring</b></a><br>
+<sub>Circular progress ring driven by numerical percentage.<br><b>Input:</b> <code>progress</code> (Number)<br><b>Size:</b> 399 B</sub>
 </td>
 </tr>
 <tr>
 <td width="25%" align="center" valign="top">
-<b>Rating Star</b><br>
-<code>examples/rating-star</code><br>
+<img src="assets/tab-bar-item.gif" width="220" alt="Tab Bar Item"><br>
+<a href="examples/tab-bar-item/scene.rml"><b>Tab Bar Item</b></a><br>
+<sub>Dual-layer state machine: active color + spring tap bounce.<br><b>Inputs:</b> <code>active</code>, <code>tap</code><br><b>Size:</b> 679 B</sub>
+</td>
+<td width="25%" align="center" valign="top">
+<img src="assets/rating-star.gif" width="220" alt="Rating Star"><br>
+<a href="examples/rating-star/scene.rml"><b>Rating Star</b></a><br>
 <sub>Parametric 5-point star that scales and fills with color.<br><b>Input:</b> <code>rating</code> (Number)<br><b>Size:</b> 506 B</sub>
 </td>
 <td width="25%" align="center" valign="top">
-<b>Progress Ring</b><br>
-<code>examples/progress-ring</code><br>
-<sub>Circular progress ring driven by numerical percentage.<br><b>Input:</b> <code>progress</code> (Number)<br><b>Size:</b> 399 B</sub>
+<img src="assets/audio-equalizer.gif" width="220" alt="Audio Equalizer"><br>
+<a href="examples/audio-equalizer/scene.rml"><b>Audio Equalizer</b></a><br>
+<sub>3 phase-offset audio bars with idle settle states.<br><b>Input:</b> <code>isPlaying</code> (Boolean)<br><b>Size:</b> 754 B</sub>
 </td>
 <td width="25%" align="center" valign="top">
-<b>Audio Equalizer</b><br>
-<code>examples/audio-equalizer</code><br>
-<sub>3 phase-offset audio bars bouncing upwards.<br><b>Input:</b> <code>isPlaying</code> (Boolean)<br><b>Size:</b> 754 B</sub>
-</td>
-<td width="25%" align="center" valign="top">
-<b>Tab Bar Item</b><br>
-<code>examples/tab-bar-item</code><br>
-<sub>Dual-layer state machine: active color + spring tap bounce.<br><b>Inputs:</b> <code>active</code>, <code>tap</code><br><b>Size:</b> 635 B</sub>
+<img src="assets/spinner-loader.gif" width="220" alt="Spinner Loader"><br>
+<a href="examples/spinner-loader/scene.rml"><b>Spinner Loader</b></a><br>
+<sub>Circular stroke chase, continuous 60-frame loop.<br><b>Input:</b> <code>speed</code> (Number)<br><b>Size:</b> 374 B</sub>
 </td>
 </tr>
 </table>

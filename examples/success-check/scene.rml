@@ -5,23 +5,23 @@
         </Fill>
 
         <Node x="100" y="100" name="Container" id="0:10">
+            <Shape x="0" y="0" name="Checkmark" id="0:12">
+                <PointsPath isClosed="false" name="CheckPath">
+                    <StraightVertex x="-26" y="2"/>
+                    <StraightVertex x="-8" y="20"/>
+                    <StraightVertex x="28" y="-18"/>
+                </PointsPath>
+                <Stroke thickness="9" cap="round" join="round" name="CheckStroke">
+                    <SolidColor colorValue="FFF3EEE6" name="OnAccent"/>
+                    <TrimPath start="0" end="1" id="0:13"/>
+                </Stroke>
+            </Shape>
+
             <Shape x="0" y="0" name="Disc" id="0:11">
                 <Ellipse width="120" height="120" originX="0.5" originY="0.5" name="Path"/>
                 <Fill name="DiscFill">
-                    <SolidColor colorValue="FF10B981" name="Green"/>
+                    <SolidColor colorValue="FF6F8163" name="Sage"/>
                 </Fill>
-            </Shape>
-
-            <Shape x="0" y="0" name="Checkmark" id="0:12">
-                <PointsPath isClosed="false" name="CheckPath">
-                    <StraightVertex x="-35" y="0"/>
-                    <StraightVertex x="-10" y="25"/>
-                    <StraightVertex x="35" y="-20"/>
-                </PointsPath>
-                <Stroke thickness="8" cap="round" join="round" name="CheckStroke">
-                    <SolidColor colorValue="FFFFFFFF" name="White"/>
-                    <TrimPath start="0" end="1" id="0:13"/>
-                </Stroke>
             </Shape>
         </Node>
 

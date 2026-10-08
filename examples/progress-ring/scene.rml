@@ -4,22 +4,22 @@
             <SolidColor colorValue="00000000" name="Transparent"/>
         </Fill>
 
-        <Shape x="100" y="100" name="Track" id="0:10">
-            <Ellipse width="140" height="140" originX="0.5" originY="0.5" name="Path"/>
-            <Stroke thickness="12" name="TrackStroke">
-                <SolidColor colorValue="20FFFFFF" name="TrackColor"/>
-            </Stroke>
-        </Shape>
-
         <Node x="100" y="100" rotation="-1.5707963" name="RingContainer" id="0:11">
             <Shape x="0" y="0" name="ProgressShape" id="0:12">
                 <Ellipse width="140" height="140" originX="0.5" originY="0.5" name="Path"/>
                 <Stroke thickness="12" cap="round" name="RingStroke">
-                    <SolidColor colorValue="FF6366F1" name="Indigo"/>
+                    <SolidColor colorValue="FFC8522B" name="Indigo"/>
                     <TrimPath start="0" end="1" id="0:13"/>
                 </Stroke>
             </Shape>
         </Node>
+
+        <Shape x="100" y="100" name="Track" id="0:10">
+            <Ellipse width="140" height="140" originX="0.5" originY="0.5" name="Path"/>
+            <Stroke thickness="12" name="TrackStroke">
+                <SolidColor colorValue="FFE4D9C6" name="TrackColor"/>
+            </Stroke>
+        </Shape>
 
         <LinearAnimation duration="100" name="Progress" id="0:30">
             <KeyedObject objectId="0:13">

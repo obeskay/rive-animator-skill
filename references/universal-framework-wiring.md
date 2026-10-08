@@ -321,3 +321,50 @@ export default function RiveComponent() {
   );
 }
 ```
+
+---
+
+## 9. Composed Motion Pattern (Rive + Gesture Tilt + Host Celebration)
+
+High-craft software layers Rive state machines with host-level gestures and particle celebrations:
+
+```tsx
+import React from 'react';
+import { useRive, useStateMachineInput } from '@rive-app/react-canvas';
+import confetti from 'canvas-confetti';
+
+export function ComposedHeroCharacter() {
+  const { rive, RiveComponent } = useRive({
+    src: '/mascot.riv',
+    stateMachines: 'State Machine 1',
+    autoplay: true,
+  });
+
+  const tiltX = useStateMachineInput(rive, 'State Machine 1', 'tiltX');
+  const tiltY = useStateMachineInput(rive, 'State Machine 1', 'tiltY');
+  const celebrate = useStateMachineInput(rive, 'State Machine 1', 'celebrate');
+
+  // 1. Gesture Tracking: Stream normalized pointer coordinates to Rive
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!tiltX || !tiltY) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+    tiltX.value = nx * 100;
+    tiltY.value = ny * 100;
+  };
+
+  // 2. Multi-Archetype Celebration: Trigger Rive animation + Host Confetti burst
+  const handleAction = () => {
+    celebrate?.fire();
+    confetti({ particleCount: 50, spread: 60, origin: { y: 0.8 } });
+  };
+
+  return (
+    <div onPointerMove={handlePointerMove} onClick={handleAction} className="relative cursor-pointer">
+      <RiveComponent style={{ width: 240, height: 240 }} />
+    </div>
+  );
+}
+```
+

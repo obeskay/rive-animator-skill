@@ -21,7 +21,30 @@ Never type a state machine name or input identifier from memory, and never claim
 
 ---
 
+## The animation toolbox: pick by the job, combine for the feeling
+
+Top-tier craft separates an app from lifeless AI slop. Never ask for "generic animation" — select the exact technique from the toolbox and layer them together:
+
+| Archetype | Pick When | Role in Composition |
+|---|---|---|
+| **Keyframes** | Choreographing a fixed timeline sequence | Internal Rive timelines: X/Y travel, scale pop, opacity, colors |
+| **Springs** | UI controls need organic responsiveness | Host-level settling, button feedback, sheet dismissals |
+| **Gestures** | Direct manipulation follows pointer/touch | Host tracking streamed into Rive `StateMachineNumber` (`tiltX`, `tiltY`) |
+| **Physics** | Dynamic forces, collisions, gravity | Bound collisions, ragdoll dynamics, rolling elements |
+| **SVG Paths** | Drawing curves, spline travel, morphing | Vector contour deformation, `followPath`, organic background masks |
+| **Layout Transitions** | Reordering, expanding, connecting views | Native FLIP / View Transitions when elements shift |
+| **Rive / Lottie** | Interactive vector runtime | Stateful characters, triggers, multi-layer inputs, nested artboards |
+| **Skeletal Rigs** | Posing connected characters | Hierarchical bone joints, IK/FK character poses |
+| **Particles** | Milestone celebrations & bursts | Confetti, starbursts, achievement bursts fired on Rive events |
+| **Shaders** | Pixel-level transformations | Glass refractions, liquid warps, dynamic blurs behind surfaces |
+
+> **The Composition Rule**: Real delight comes from layering. Combine a Rive state machine character + an SVG path morphing background mask + 3D parallax depth + host gesture tilt + spring snap landing + particle celebration.
+> Full guide: [references/animation-toolbox-cheatsheet.md](references/animation-toolbox-cheatsheet.md).
+
+---
+
 ## Fast path: start from a recipe
+
 
 `examples/` holds ready-to-run interactive recipes. Each has its own `rive.yaml`, `scene.rml`, and compiled `.riv` binary. Starting from the nearest one beats a blank page:
 
@@ -56,6 +79,7 @@ rive my-switch --once
 | **Compile & Verify** | `rive proj --verify` | Rive CLI verification: validates syntax and imports |
 | **Inspect & Wire Binary** | `python3 scripts/rive_lint.py proj/build/proj.riv` | Deep binary inspection + copy-paste runtime wiring |
 | **Multi-Framework Wiring** | `python3 scripts/rive_lint.py file.riv -f <platform>` | Generates code for React, Vue, Svelte, Web, Flutter, SwiftUI, Android, RN |
+| **Record Interactive GIFs** | `node scripts/make-gifs.mjs [name]` | Headless Puppeteer + Rive canvas-advanced scripted session recording |
 
 ---
 
@@ -79,7 +103,20 @@ Read the PNGs. A loop is at rest on frame 0, so one screenshot proves nothing: t
 
 Before writing RML, read `rive docs format` and `references/rml-authoring.md`. Before keying any attribute, check `rive schema <Type>`.
 
+### The 5-beat choreography & rest invariant
+
+When authoring actions for characters or controls:
+1. **Rest Invariant**: Every state machine must have an explicit Resting state. Actions must be closed loops (`Rest -> Action -> Rest`) using `enableExitTime="true"` so they never latch.
+2. **5-Beat Choreography**:
+   - **Beat 1 (Rest)**: Settled baseline pose.
+   - **Beat 2 (Anticipation)**: Subtle recoil or counter-motion before the action.
+   - **Beat 3 (Apex)**: Peak displacement and expression.
+   - **Beat 4 (Settle)**: Secondary overshoot / dampening.
+   - **Beat 5 (Return)**: Smooth resolution back to Rest.
+3. **Visual Edge-Case Audit**: Inspect captures for artboard clipping, jagged vector tangents, latching states, and abrupt non-eased transitions.
+
 ---
+
 
 ## Starting from an SVG
 

@@ -4,22 +4,22 @@
             <SolidColor colorValue="00000000" name="Transparent"/>
         </Fill>
 
-        <Shape x="100" y="100" name="Track" id="0:10">
-            <Ellipse width="100" height="100" originX="0.5" originY="0.5" name="Path"/>
-            <Stroke thickness="10" cap="round" name="TrackStroke">
-                <SolidColor colorValue="20FFFFFF" name="TrackColor"/>
-            </Stroke>
-        </Shape>
-
         <Node x="100" y="100" name="Rotator" id="0:12">
             <Shape x="0" y="0" name="Arc" id="0:13">
                 <Ellipse width="100" height="100" originX="0.5" originY="0.5" name="Path"/>
                 <Stroke thickness="10" cap="round" name="ArcStroke">
-                    <SolidColor colorValue="FF3B82F6" name="ArcColor"/>
+                    <SolidColor colorValue="FFC8522B" name="ArcColor"/>
                     <TrimPath start="0" end="0.3" offset="0"/>
                 </Stroke>
             </Shape>
         </Node>
+
+        <Shape x="100" y="100" name="Track" id="0:10">
+            <Ellipse width="100" height="100" originX="0.5" originY="0.5" name="Path"/>
+            <Stroke thickness="10" cap="round" name="TrackStroke">
+                <SolidColor colorValue="FFE4D9C6" name="TrackColor"/>
+            </Stroke>
+        </Shape>
 
         <LinearAnimation loopValue="loop" duration="60" name="Spin" id="0:30">
             <KeyedObject objectId="0:12">

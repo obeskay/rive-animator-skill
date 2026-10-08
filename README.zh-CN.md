@@ -8,15 +8,45 @@
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-black)](https://code.claude.com/docs)
 [![Antigravity](https://img.shields.io/badge/Antigravity-Skill-black)](https://antigravity.google)
 [![Rive](https://img.shields.io/badge/Rive-格式_7.3-black)](https://rive.app)
-[![Tests](https://img.shields.io/badge/测试-8项通过-10B981?style=flat-square)](tests/)
+[![Tests](https://img.shields.io/badge/测试-9项通过-10B981?style=flat-square)](tests/)
 
 [English](README.md) · [Español](README.es.md) · 中文
+
+<br>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.gif">
+  <img src="assets/hero.gif" alt="运行在真实运行时中、受动态输入驱动的 8 个验证完毕的 Rive 动效模板" width="100%">
+</picture>
+
+[示例库](#工业级精选模板) · [动画工具箱与决策树](references/animation-toolbox-cheatsheet.md) · [两种工作入口](#两种工作入口) · [AI 助手提问](#配合-ai-编程助手使用) · [跨端接入](#跨端全平台接入代码直出8-大框架) · [缺陷清单](#缺陷清单) · [安装指引](#安装指引)
 
 </div>
 
 ---
 
+## 匠心、品味与体验愉悦感（抵制 AI 粗制滥造）
+
+许多通过 AI 快速搭建（Vibe-coding）的应用往往显得呆板无趣，因为它们停留在最粗糙的基础功能与静态页面上，丢失了产品打磨的“最后一公里”。打动用户的真实愉悦感，正是顶级产品与 AI 工业废品的分水岭。
+
+绝不要对 AI 助手说泛泛的*“加点动画”*。直接从 [11 种动画原语工具箱](references/animation-toolbox-cheatsheet.md) 中挑选并组合分层：
+- **关键帧（Keyframes）**：精准编排时间轴序列（0s 至 2.4s）。
+- **弹簧阻尼（Springs）**：赋能 UI 控件响应式物理回弹与零超调着陆。
+- **手势交互（Gestures）**：1:1 追踪触控与指针；实时驱动 Rive `StateMachineNumber` 浮点输入（`tiltX`, `tiltY`）。
+- **物理模拟（Physics）**：重力、碰撞、弹力与陀螺仪动态力场驱动。
+- **SVG 路径（SVG Paths）**：动态描边、样条跟随与有机矢量轮廓变形。
+- **布局过渡（Layout Transitions）**：列表重排与卡片展开的系统级 FLIP / View Transitions。
+- **Rive**：多图层带状态矢量的交互状态机、嵌套画板与运行时多端驱动。
+- **骨骼绑定（Skeletal Rigs）**：带骨骼层级的角色肢体姿态与布娃娃动力学。
+- **粒子系统（Particles）**：成就解锁与交互吸附时的五彩纸屑与星芒爆炸。
+- **着色器（Shaders）**：GPU 像素级变形（毛玻璃折射、水波扰动、动态模糊）。
+
+> **组合法则（Composition Rule）**：“因功能而选，为触感而合”。真正的惊艳来自于多层技术复合：Rive 角色状态机 + SVG 背景形变遮罩 + 3D 视差层级 + 手势倾斜驱动 + 弹簧吸附回弹 + 粒子烟花庆祝。
+
+---
+
 ## 核心痛点
+
 
 每一位试图将矢量交互动画交付到生产环境的开发者都曾遭遇过这种绝望：**`.riv` 文件是一个编译后的微型交互程序，绝非一张静态图片。**
 
@@ -54,51 +84,51 @@
 
 ## 工业级精选模板
 
-`examples/` 目录下收录了 8 个经过真实编译器与运行测试的交互组件模板，内含完整的 `scene.rml`、`rive.yaml` 以及编译完成的 `.riv` 二进制文件：
+下方每个交互组件均由 `examples/` 源码编译并在官方 `@rive-app/canvas-advanced` 运行时中真实渲染，由状态机脚本输入动态实时驱动：
 
 <table>
 <tr>
 <td width="25%" align="center" valign="top">
-<b>Toggle Switch（拨动开关）</b><br>
-<code>examples/toggle-switch</code><br>
+<img src="assets/toggle-switch.gif" width="220" alt="Toggle Switch"><br>
+<a href="examples/toggle-switch/scene.rml"><b>Toggle Switch</b></a><br>
 <sub>硬件阻尼质感、240ms 缓动、内置点击响应。<br><b>输入：</b> <code>tap</code> (Trigger)<br><b>体积：</b> 540 B</sub>
 </td>
 <td width="25%" align="center" valign="top">
-<b>Spinner Loader（加载环）</b><br>
-<code>examples/spinner-loader</code><br>
-<sub>连续 60 帧圆弧描边追逐循环，支持速度调节。<br><b>输入：</b> <code>speed</code> (Number)<br><b>体积：</b> 374 B</sub>
+<img src="assets/like-heart.gif" width="220" alt="Like Button"><br>
+<a href="examples/like-heart/scene.rml"><b>Like Button</b></a><br>
+<sub>微爆破缩放弹性（0.8 &rarr; 1.25 &rarr; 1.0）与陶土红变色。<br><b>输入：</b> <code>liked</code> (Boolean)<br><b>体积：</b> 719 B</sub>
 </td>
 <td width="25%" align="center" valign="top">
-<b>Success Check（成功动效）</b><br>
-<code>examples/success-check</code><br>
-<sub>圆盘微回弹伴随对勾路径平滑绘制完成。<br><b>输入：</b> <code>fire</code> (Trigger)<br><b>体积：</b> 584 B</sub>
+<img src="assets/success-check.gif" width="220" alt="Success Check"><br>
+<a href="examples/success-check/scene.rml"><b>Success Check</b></a><br>
+<sub>圆盘微回弹伴随对勾路径平滑绘制完成。<br><b>输入：</b> <code>fire</code> (Trigger)<br><b>体积：</b> 591 B</sub>
 </td>
 <td width="25%" align="center" valign="top">
-<b>Like Button（点赞红心）</b><br>
-<code>examples/like-heart</code><br>
-<sub>微爆破缩放弹性（0.8 → 1.25 → 1.0）与红心变色。<br><b>输入：</b> <code>liked</code> (Boolean)<br><b>体积：</b> 666 B</sub>
+<img src="assets/progress-ring.gif" width="220" alt="Progress Ring"><br>
+<a href="examples/progress-ring/scene.rml"><b>Progress Ring</b></a><br>
+<sub>由 0-100 数值精准控制的闭合环形进度条。<br><b>输入：</b> <code>progress</code> (Number)<br><b>体积：</b> 399 B</sub>
 </td>
 </tr>
 <tr>
 <td width="25%" align="center" valign="top">
-<b>Rating Star（评分五角星）</b><br>
-<code>examples/rating-star</code><br>
+<img src="assets/tab-bar-item.gif" width="220" alt="Tab Bar Item"><br>
+<a href="examples/tab-bar-item/scene.rml"><b>Tab Bar Item</b></a><br>
+<sub>双层状态机：选中变色层 + 点击弹性回弹层。<br><b>输入：</b> <code>active</code>, <code>tap</code><br><b>体积：</b> 679 B</sub>
+</td>
+<td width="25%" align="center" valign="top">
+<img src="assets/rating-star.gif" width="220" alt="Rating Star"><br>
+<a href="examples/rating-star/scene.rml"><b>Rating Star</b></a><br>
 <sub>参数化 5 顶角星形，根据分值平滑缩放与填充。<br><b>输入：</b> <code>rating</code> (Number)<br><b>体积：</b> 506 B</sub>
 </td>
 <td width="25%" align="center" valign="top">
-<b>Progress Ring（进度光环）</b><br>
-<code>examples/progress-ring</code><br>
-<sub>由 0-100 数值精准控制的闭合环形进度条。<br><b>输入：</b> <code>progress</code> (Number)<br><b>体积：</b> 399 B</sub>
+<img src="assets/audio-equalizer.gif" width="220" alt="Audio Equalizer"><br>
+<a href="examples/audio-equalizer/scene.rml"><b>Audio Equalizer</b></a><br>
+<sub>3 根向上弹跳的相位差动态音量柱，支持暂停平滑归位。<br><b>输入：</b> <code>isPlaying</code> (Boolean)<br><b>体积：</b> 754 B</sub>
 </td>
 <td width="25%" align="center" valign="top">
-<b>Audio Equalizer（音频均衡器）</b><br>
-<code>examples/audio-equalizer</code><br>
-<sub>3 根向上弹跳的相位差动态音量柱。<br><b>输入：</b> <code>isPlaying</code> (Boolean)<br><b>体积：</b> 754 B</sub>
-</td>
-<td width="25%" align="center" valign="top">
-<b>Tab Bar Item（底部导航项）</b><br>
-<code>examples/tab-bar-item</code><br>
-<sub>双层状态机：选中变色层 + 点击弹性回弹层。<br><b>输入：</b> <code>active</code>, <code>tap</code><br><b>体积：</b> 635 B</sub>
+<img src="assets/spinner-loader.gif" width="220" alt="Spinner Loader"><br>
+<a href="examples/spinner-loader/scene.rml"><b>Spinner Loader</b></a><br>
+<sub>连续 60 帧圆弧描边追逐循环，支持速度调节。<br><b>输入：</b> <code>speed</code> (Number)<br><b>体积：</b> 374 B</sub>
 </td>
 </tr>
 </table>

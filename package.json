@@ -9,7 +9,8 @@
     "test": "python3 -m unittest discover -s tests -v",
     "lint:rml": "python3 scripts/rml_lint.py examples/*/scene.rml",
     "lint:riv": "python3 scripts/rive_lint.py examples/*/build/*.riv",
-    "build:examples": "for d in examples/*; do [ -d \"$d\" ] && rive \"$d\" --once; done"
+    "build:examples": "for d in examples/*; do [ -d \"$d\" ] && rive \"$d\" --once; done",
+    "gifs": "node scripts/make-gifs.mjs"
   },
   "keywords": [
     "rive",
@@ -22,5 +23,9 @@
     "rml",
     "claude-skill",
     "antigravity-skill"
-  ]
+  ],
+  "devDependencies": {
+    "@rive-app/canvas-advanced": "2.44.0",
+    "puppeteer-core": "25.9.0"
+  }
 }

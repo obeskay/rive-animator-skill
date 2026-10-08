@@ -5,17 +5,19 @@
         </Fill>
 
         <Node x="100" y="100" name="HeartContainer" id="0:10">
-            <Shape x="0" y="0" name="HeartShape" id="0:11">
+            <Shape x="-50" y="-50" name="HeartShape" id="0:11">
                 <PointsPath isClosed="true" name="Path">
-                    <CubicDetachedVertex x="0" y="-15" inDistance="20" inRotation="3.92699" outDistance="20" outRotation="5.497787"/>
-                    <CubicDetachedVertex x="45" y="-40" inDistance="25" inRotation="4.71238" outDistance="25" outRotation="1.57079"/>
-                    <CubicDetachedVertex x="35" y="5" inDistance="20" inRotation="4.71238" outDistance="20" outRotation="2.09439"/>
-                    <StraightVertex x="0" y="45"/>
-                    <CubicDetachedVertex x="-35" y="5" inDistance="20" inRotation="1.04719" outDistance="20" outRotation="4.71238"/>
-                    <CubicDetachedVertex x="-45" y="-40" inDistance="25" inRotation="1.57079" outDistance="25" outRotation="4.71238"/>
+                    <StraightVertex x="50" y="95.875"/>
+                    <CubicDetachedVertex x="42.75" y="89.275" inRotation="0" inDistance="0" outRotation="-2.405" outDistance="34.7604"/>
+                    <CubicDetachedVertex x="0" y="31.625" inRotation="1.5708" inDistance="18.9" outRotation="-1.5708" outDistance="15.4"/>
+                    <CubicDetachedVertex x="27.5" y="4.125" inRotation="3.1416" inDistance="15.4" outRotation="0" outDistance="8.7"/>
+                    <CubicDetachedVertex x="50" y="14.575" inRotation="-2.2762" inDistance="8.4061" outRotation="-0.8654" outDistance="8.4061"/>
+                    <CubicDetachedVertex x="72.5" y="4.125" inRotation="3.1416" inDistance="8.7" outRotation="0" outDistance="15.4"/>
+                    <CubicDetachedVertex x="100" y="31.625" inRotation="-1.5708" inDistance="15.4" outRotation="1.5708" outDistance="18.9"/>
+                    <CubicDetachedVertex x="57.25" y="89.325" inRotation="-0.7376" inDistance="34.794" outRotation="0" outDistance="0"/>
                 </PointsPath>
                 <Fill name="HeartFill">
-                    <SolidColor colorValue="FFD1D5DB" name="Color" id="0:12"/>
+                    <SolidColor colorValue="FF8A8178" name="Color" id="0:12"/>
                 </Fill>
             </Shape>
         </Node>
@@ -31,7 +33,7 @@
             </KeyedObject>
             <KeyedObject objectId="0:12">
                 <KeyedProperty propertyKey="37">
-                    <KeyFrameColor value="FFD1D5DB" frame="0" interpolationType="hold"/>
+                    <KeyFrameColor value="FF8A8178" frame="0" interpolationType="hold"/>
                 </KeyedProperty>
             </KeyedObject>
         </LinearAnimation>
@@ -59,7 +61,7 @@
             </KeyedObject>
             <KeyedObject objectId="0:12">
                 <KeyedProperty propertyKey="37">
-                    <KeyFrameColor value="FFEF4444" frame="0" interpolationType="hold"/>
+                    <KeyFrameColor value="FFC8522B" frame="0" interpolationType="hold"/>
                 </KeyedProperty>
             </KeyedObject>
         </LinearAnimation>

@@ -6,6 +6,26 @@ follows (`references/motion-taste.md` there): quiet, precise, warm — zero over
 nothing growing from a point, rests as part of the motion. Depart from it when the brief
 asks, and say so.
 
+## Taste, craft & delight vs AI slop
+
+A vibe-coded app often feels lifeless because generative AI defaults to the middle:
+it implements raw functional features and bare-bones static UI, skipping the "last mile"
+of craft. What makes users stop and feel delight is intentional, human-calibrated motion:
+
+1. **Never ask for "generic animation"**: Pick the specific mechanism (Keyframes, Springs,
+   Gestures, Physics, SVG paths, Layout transitions, Rive, Skeletal rigs, Particles, Shaders).
+   See `references/animation-toolbox-cheatsheet.md` for the full 11-archetype matrix.
+2. **Combine for the feeling**: The best apps do not rely on one technique in isolation.
+   Layer a Rive character with an SVG morphing background mask, 3D parallax depth, host-level
+   continuous gesture tilt, and particle celebration bursts.
+3. **The 5-beat action choreography**:
+   - **Beat 1: Rest**: Settled neutral pose.
+   - **Beat 2: Anticipation**: Counter-movement (crouch before jumping, pull back before drinking).
+   - **Beat 3: Action Apex**: Peak transformation/displacement.
+   - **Beat 4: Settle**: Elastic dampening past the target.
+   - **Beat 5: Return to Rest**: Clean loop back to baseline.
+
+
 ## Easing, as RML
 
 Every eased segment is a keyframe (or transition) with `interpolationType="cubic"` and a

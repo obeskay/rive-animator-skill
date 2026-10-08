@@ -178,6 +178,47 @@ const { value: level, setValue: setLevel } = useViewModelInstanceNumber('level',
 `rive_lint.py` prints every view model with its property names and types, which is the
 list of paths the host may use.
 
+## The rest invariant & action cycles (game engine pattern)
+
+Every character or interactive UI widget in a state machine must possess an explicit
+**Resting State** (idle breathing, neutral pose, settled button). When an action state
+(e.g., drinking coffee, putting on a hat, bounce pop) is triggered:
+
+1. **Closed-loop transition**: The machine goes from `Rest` → `Action` → `Rest`. Never leave
+   an action without an exit path.
+2. **`enableExitTime` for full execution**: When an action must play through to completion
+   before settling back to rest, configure the return transition with exit time:
+
+```xml
+<AnimationState animationId="0:32" name="Action" x="320" y="0" id="0:28">
+    <!-- Returns to Rest (0:27) once 100% of the Action animation has elapsed -->
+    <StateTransition stateToId="0:27" enableExitTime="true" exitTimeIsPercetange="true" exitTime="100"/>
+</AnimationState>
+```
+
+## Continuous gesture & gyroscope streaming
+
+For tilt, sway, drag-follow, or gyroscope effects, define `StateMachineNumber` inputs
+with normalized ranges (e.g., `-100 .. 100` or `0 .. 1`):
+
+```xml
+<StateMachineNumber name="tiltX" value="0" id="0:50"/>
+<StateMachineNumber name="tiltY" value="0" id="0:51"/>
+```
+
+In the host (React, SwiftUI, Flutter), stream normalized pointer or sensor values:
+
+```ts
+const tiltX = useStateMachineInput(rive, 'State Machine 1', 'tiltX');
+const tiltY = useStateMachineInput(rive, 'State Machine 1', 'tiltY');
+
+// On device motion or pointer move:
+if (tiltX && tiltY) {
+  tiltX.value = normalizedX * 100; // -100 to 100
+  tiltY.value = normalizedY * 100;
+}
+```
+
 ## Checking that it behaves
 
 Structure is not behaviour. Count what exists, then click it:
@@ -193,3 +234,4 @@ rive <dir> --screenshot=off.png --pointer=click@120,60 --pointer=move@400,400 --
 it only works one way — the single most common state machine bug, invisible to every
 static check. Put a filler gesture between two clicks on the same target: a value a
 listener writes is not visible to the next listener until a frame has passed.
+
