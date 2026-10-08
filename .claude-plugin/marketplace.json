@@ -1,0 +1,35 @@
+{
+  "name": "rive-animator-marketplace",
+  "owner": {
+    "name": "obeskay",
+    "url": "https://github.com/obeskay"
+  },
+  "metadata": {
+    "description": "Marketplace for Rive Animator plugin - Code-first interactive Rive animations and State Machines",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "rive-animator",
+      "source": "./",
+      "description": "Code-first Rive animation toolkit: interactive recipes, direct SVG-to-RML converter, RML linter, binary inspector, and universal framework wiring across React, Vue, Svelte, Web Canvas, Flutter, SwiftUI, Android, and React Native.",
+      "version": "1.0.0",
+      "author": {
+        "name": "ov"
+      },
+      "homepage": "https://github.com/obeskay/rive-animator-skill",
+      "repository": "https://github.com/obeskay/rive-animator-skill",
+      "license": "MIT",
+      "keywords": [
+        "rive",
+        "animation",
+        "state-machines",
+        "vector-animation",
+        "micro-interactions",
+        "svg-to-rive",
+        "rml",
+        "interactive-ui"
+      ]
+    }
+  ]
+}

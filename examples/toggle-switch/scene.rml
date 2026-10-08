@@ -1,0 +1,77 @@
+<Rive version="1" kind="fragment">
+    <Artboard defaultStateMachineId="0:20" styleId="0:2" width="240" height="160" name="Toggle" id="0:1">
+        <LayoutComponentStyle name="Artboard Style" id="0:2"/>
+        <Fill name="Paper">
+            <SolidColor colorValue="FFF3EEE6" name="Color"/>
+        </Fill>
+
+        <Shape x="92" y="80" name="Knob" id="0:10">
+            <Ellipse width="52" height="52" originX="0.5" originY="0.5" name="Path"/>
+            <Fill name="Fill">
+                <SolidColor colorValue="FFF3EEE6" name="Color"/>
+            </Fill>
+        </Shape>
+
+        <Shape x="120" y="80" name="Track" id="0:11">
+            <Rectangle width="120" height="64" cornerRadiusTL="32" originX="0.5" originY="0.5" name="Path"/>
+            <Fill name="Fill">
+                <SolidColor colorValue="FF8A8178" name="Color" id="0:12"/>
+            </Fill>
+        </Shape>
+
+        <LinearAnimation duration="1" name="Off" id="0:30">
+            <KeyedObject objectId="0:10">
+                <KeyedProperty propertyKey="13">
+                    <KeyFrameDouble value="92" frame="0" interpolationType="hold"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:12">
+                <KeyedProperty propertyKey="37">
+                    <KeyFrameColor value="FF8A8178" frame="0" interpolationType="hold"/>
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+
+        <LinearAnimation duration="1" name="On" id="0:31">
+            <KeyedObject objectId="0:10">
+                <KeyedProperty propertyKey="13">
+                    <KeyFrameDouble value="148" frame="0" interpolationType="hold"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:12">
+                <KeyedProperty propertyKey="37">
+                    <KeyFrameColor value="FF6F8163" frame="0" interpolationType="hold"/>
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+
+        <StateMachine name="State Machine 1" id="0:20">
+            <StateMachineTrigger name="tap" id="0:21"/>
+            <StateMachineListenerSingle targetId="0:11" listenerTypeValue="click" name="Tap">
+                <ListenerTriggerChange inputId="0:21"/>
+            </StateMachineListenerSingle>
+
+            <StateMachineLayer name="Toggle" id="0:22">
+                <AnyState x="480" y="0"/>
+                <ExitState x="560" y="0"/>
+                <EntryState x="0" y="16">
+                    <StateTransition stateToId="0:23"/>
+                </EntryState>
+
+                <AnimationState animationId="0:30" x="160" y="0" id="0:23">
+                    <StateTransition stateToId="0:24" duration="240" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.23" y1="1" x2="0.32" y2="1"/>
+                        <TransitionTriggerCondition inputId="0:21"/>
+                    </StateTransition>
+                </AnimationState>
+
+                <AnimationState animationId="0:31" x="320" y="0" id="0:24">
+                    <StateTransition stateToId="0:23" duration="240" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.23" y1="1" x2="0.32" y2="1"/>
+                        <TransitionTriggerCondition inputId="0:21"/>
+                    </StateTransition>
+                </AnimationState>
+            </StateMachineLayer>
+        </StateMachine>
+    </Artboard>
+</Rive>

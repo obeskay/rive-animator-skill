@@ -1,0 +1,26 @@
+{
+  "name": "rive-animator-skill",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Code-first Rive toolkit for AI coding agents and developers: recipes, SVG-to-RML converter, RML linter, binary inspector, and universal framework runtime wiring.",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "test": "python3 -m unittest discover -s tests -v",
+    "lint:rml": "python3 scripts/rml_lint.py examples/*/scene.rml",
+    "lint:riv": "python3 scripts/rive_lint.py examples/*/build/*.riv",
+    "build:examples": "for d in examples/*; do [ -d \"$d\" ] && rive \"$d\" --once; done"
+  },
+  "keywords": [
+    "rive",
+    "rive-animation",
+    "state-machine",
+    "vector-animation",
+    "micro-interactions",
+    "svg-to-rive",
+    "ui-animation",
+    "rml",
+    "claude-skill",
+    "antigravity-skill"
+  ]
+}

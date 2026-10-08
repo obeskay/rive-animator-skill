@@ -1,0 +1,92 @@
+<Rive version="1" kind="fragment">
+    <Artboard defaultStateMachineId="0:20" width="120" height="120" name="TabBarItem" id="0:1">
+        <Fill name="Background">
+            <SolidColor colorValue="00000000" name="Transparent"/>
+        </Fill>
+
+        <Node x="60" y="60" name="IconContainer" id="0:10">
+            <Shape x="0" y="0" name="Badge" id="0:11">
+                <Rectangle width="48" height="48" cornerRadiusTL="14" cornerRadiusTR="14" cornerRadiusBL="14" cornerRadiusBR="14" originX="0.5" originY="0.5" name="Path"/>
+                <Fill name="BadgeFill">
+                    <SolidColor colorValue="FF6366F1" name="Color" id="0:12"/>
+                </Fill>
+            </Shape>
+            <Shape x="0" y="0" name="Dot" id="0:13">
+                <Ellipse width="12" height="12" originX="0.5" originY="0.5" name="Path"/>
+                <Fill name="DotFill">
+                    <SolidColor colorValue="FFFFFFFF" name="White"/>
+                </Fill>
+            </Shape>
+        </Node>
+
+        <LinearAnimation duration="1" name="Inactive" id="0:30">
+            <KeyedObject objectId="0:12">
+                <KeyedProperty propertyKey="37"><KeyFrameColor value="FF9CA3AF" frame="0" interpolationType="hold"/></KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+
+        <LinearAnimation duration="1" name="Active" id="0:31">
+            <KeyedObject objectId="0:12">
+                <KeyedProperty propertyKey="37"><KeyFrameColor value="FF6366F1" frame="0" interpolationType="hold"/></KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+
+        <LinearAnimation duration="16" name="Bounce" id="0:32">
+            <KeyedObject objectId="0:10">
+                <KeyedProperty propertyKey="16">
+                    <KeyFrameDouble value="0.8" frame="0" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.23" y1="1" x2="0.32" y2="1"/>
+                    </KeyFrameDouble>
+                    <KeyFrameDouble value="1.15" frame="8" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.23" y1="1" x2="0.32" y2="1"/>
+                    </KeyFrameDouble>
+                    <KeyFrameDouble value="1.0" frame="16" interpolationType="linear"/>
+                </KeyedProperty>
+                <KeyedProperty propertyKey="17">
+                    <KeyFrameDouble value="0.8" frame="0" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.23" y1="1" x2="0.32" y2="1"/>
+                    </KeyFrameDouble>
+                    <KeyFrameDouble value="1.15" frame="8" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.23" y1="1" x2="0.32" y2="1"/>
+                    </KeyFrameDouble>
+                    <KeyFrameDouble value="1.0" frame="16" interpolationType="linear"/>
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+
+        <StateMachine name="State Machine 1" id="0:20">
+            <StateMachineBool name="active" id="0:21" value="false"/>
+            <StateMachineTrigger name="tap" id="0:22"/>
+
+            <StateMachineLayer name="ColorLayer" id="0:23">
+                <AnyState x="400" y="0"/>
+                <ExitState x="500" y="0"/>
+                <EntryState x="0" y="0"><StateTransition stateToId="0:24"/></EntryState>
+                <AnimationState animationId="0:30" x="160" y="0" id="0:24">
+                    <StateTransition stateToId="0:25">
+                        <TransitionBoolCondition inputId="0:21" opValue="equal"/>
+                    </StateTransition>
+                </AnimationState>
+                <AnimationState animationId="0:31" x="320" y="0" id="0:25">
+                    <StateTransition stateToId="0:24">
+                        <TransitionBoolCondition inputId="0:21" opValue="notEqual"/>
+                    </StateTransition>
+                </AnimationState>
+            </StateMachineLayer>
+
+            <StateMachineLayer name="MotionLayer" id="0:26">
+                <AnyState x="400" y="0"/>
+                <ExitState x="500" y="0"/>
+                <EntryState x="0" y="0"><StateTransition stateToId="0:27"/></EntryState>
+                <AnimationState animationId="0:30" x="160" y="0" id="0:27">
+                    <StateTransition stateToId="0:28">
+                        <TransitionTriggerCondition inputId="0:22"/>
+                    </StateTransition>
+                </AnimationState>
+                <AnimationState animationId="0:32" x="320" y="0" id="0:28">
+                    <StateTransition stateToId="0:27"/>
+                </AnimationState>
+            </StateMachineLayer>
+        </StateMachine>
+    </Artboard>
+</Rive>

@@ -1,0 +1,89 @@
+<Rive version="1" kind="fragment">
+    <Artboard defaultStateMachineId="0:20" width="200" height="200" name="LikeHeart" id="0:1">
+        <Fill name="Background">
+            <SolidColor colorValue="00000000" name="Transparent"/>
+        </Fill>
+
+        <Node x="100" y="100" name="HeartContainer" id="0:10">
+            <Shape x="0" y="0" name="HeartShape" id="0:11">
+                <PointsPath isClosed="true" name="Path">
+                    <CubicDetachedVertex x="0" y="-15" inDistance="20" inRotation="3.92699" outDistance="20" outRotation="5.497787"/>
+                    <CubicDetachedVertex x="45" y="-40" inDistance="25" inRotation="4.71238" outDistance="25" outRotation="1.57079"/>
+                    <CubicDetachedVertex x="35" y="5" inDistance="20" inRotation="4.71238" outDistance="20" outRotation="2.09439"/>
+                    <StraightVertex x="0" y="45"/>
+                    <CubicDetachedVertex x="-35" y="5" inDistance="20" inRotation="1.04719" outDistance="20" outRotation="4.71238"/>
+                    <CubicDetachedVertex x="-45" y="-40" inDistance="25" inRotation="1.57079" outDistance="25" outRotation="4.71238"/>
+                </PointsPath>
+                <Fill name="HeartFill">
+                    <SolidColor colorValue="FFD1D5DB" name="Color" id="0:12"/>
+                </Fill>
+            </Shape>
+        </Node>
+
+        <LinearAnimation duration="1" name="Unliked" id="0:30">
+            <KeyedObject objectId="0:10">
+                <KeyedProperty propertyKey="16">
+                    <KeyFrameDouble value="1" frame="0" interpolationType="hold"/>
+                </KeyedProperty>
+                <KeyedProperty propertyKey="17">
+                    <KeyFrameDouble value="1" frame="0" interpolationType="hold"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:12">
+                <KeyedProperty propertyKey="37">
+                    <KeyFrameColor value="FFD1D5DB" frame="0" interpolationType="hold"/>
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+
+        <LinearAnimation duration="24" name="Liked" id="0:31">
+            <KeyedObject objectId="0:10">
+                <KeyedProperty propertyKey="16">
+                    <KeyFrameDouble value="0.8" frame="0" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.23" y1="1" x2="0.32" y2="1"/>
+                    </KeyFrameDouble>
+                    <KeyFrameDouble value="1.25" frame="12" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.23" y1="1" x2="0.32" y2="1"/>
+                    </KeyFrameDouble>
+                    <KeyFrameDouble value="1" frame="24" interpolationType="linear"/>
+                </KeyedProperty>
+                <KeyedProperty propertyKey="17">
+                    <KeyFrameDouble value="0.8" frame="0" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.23" y1="1" x2="0.32" y2="1"/>
+                    </KeyFrameDouble>
+                    <KeyFrameDouble value="1.25" frame="12" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.23" y1="1" x2="0.32" y2="1"/>
+                    </KeyFrameDouble>
+                    <KeyFrameDouble value="1" frame="24" interpolationType="linear"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:12">
+                <KeyedProperty propertyKey="37">
+                    <KeyFrameColor value="FFEF4444" frame="0" interpolationType="hold"/>
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+
+        <StateMachine name="State Machine 1" id="0:20">
+            <StateMachineBool name="liked" id="0:21" value="false"/>
+
+            <StateMachineLayer name="HeartLayer" id="0:22">
+                <AnyState x="400" y="0"/>
+                <ExitState x="500" y="0"/>
+                <EntryState x="0" y="0">
+                    <StateTransition stateToId="0:23"/>
+                </EntryState>
+                <AnimationState animationId="0:30" x="160" y="0" id="0:23">
+                    <StateTransition stateToId="0:24">
+                        <TransitionBoolCondition inputId="0:21" opValue="equal"/>
+                    </StateTransition>
+                </AnimationState>
+                <AnimationState animationId="0:31" x="320" y="0" id="0:24">
+                    <StateTransition stateToId="0:23">
+                        <TransitionBoolCondition inputId="0:21" opValue="notEqual"/>
+                    </StateTransition>
+                </AnimationState>
+            </StateMachineLayer>
+        </StateMachine>
+    </Artboard>
+</Rive>

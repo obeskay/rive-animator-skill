@@ -1,0 +1,94 @@
+<Rive version="1" kind="fragment">
+    <Artboard defaultStateMachineId="0:20" width="200" height="160" name="AudioEqualizer" id="0:1">
+        <Fill name="Background">
+            <SolidColor colorValue="00000000" name="Transparent"/>
+        </Fill>
+
+        <Node x="60" y="120" name="Bar1Container" id="0:10">
+            <Shape x="0" y="0" name="Bar1" id="0:11">
+                <Rectangle width="16" height="80" cornerRadiusTL="8" cornerRadiusTR="8" cornerRadiusBL="8" cornerRadiusBR="8" originX="0.5" originY="1.0" name="Path"/>
+                <Fill name="Fill1">
+                    <SolidColor colorValue="FFEC4899" name="Pink"/>
+                </Fill>
+            </Shape>
+        </Node>
+
+        <Node x="100" y="120" name="Bar2Container" id="0:12">
+            <Shape x="0" y="0" name="Bar2" id="0:13">
+                <Rectangle width="16" height="80" cornerRadiusTL="8" cornerRadiusTR="8" cornerRadiusBL="8" cornerRadiusBR="8" originX="0.5" originY="1.0" name="Path"/>
+                <Fill name="Fill2">
+                    <SolidColor colorValue="FF8B5CF6" name="Purple"/>
+                </Fill>
+            </Shape>
+        </Node>
+
+        <Node x="140" y="120" name="Bar3Container" id="0:14">
+            <Shape x="0" y="0" name="Bar3" id="0:15">
+                <Rectangle width="16" height="80" cornerRadiusTL="8" cornerRadiusTR="8" cornerRadiusBL="8" cornerRadiusBR="8" originX="0.5" originY="1.0" name="Path"/>
+                <Fill name="Fill3">
+                    <SolidColor colorValue="FF3B82F6" name="Blue"/>
+                </Fill>
+            </Shape>
+        </Node>
+
+        <LinearAnimation loopValue="loop" duration="60" name="Playing" id="0:30">
+            <KeyedObject objectId="0:10">
+                <KeyedProperty propertyKey="17">
+                    <KeyFrameDouble value="0.3" frame="0" interpolationType="linear"/>
+                    <KeyFrameDouble value="1.0" frame="15" interpolationType="linear"/>
+                    <KeyFrameDouble value="0.4" frame="35" interpolationType="linear"/>
+                    <KeyFrameDouble value="0.3" frame="60" interpolationType="linear"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:12">
+                <KeyedProperty propertyKey="17">
+                    <KeyFrameDouble value="0.8" frame="0" interpolationType="linear"/>
+                    <KeyFrameDouble value="0.2" frame="20" interpolationType="linear"/>
+                    <KeyFrameDouble value="0.9" frame="45" interpolationType="linear"/>
+                    <KeyFrameDouble value="0.8" frame="60" interpolationType="linear"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:14">
+                <KeyedProperty propertyKey="17">
+                    <KeyFrameDouble value="0.5" frame="0" interpolationType="linear"/>
+                    <KeyFrameDouble value="0.9" frame="30" interpolationType="linear"/>
+                    <KeyFrameDouble value="0.2" frame="45" interpolationType="linear"/>
+                    <KeyFrameDouble value="0.5" frame="60" interpolationType="linear"/>
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+
+        <LinearAnimation duration="1" name="Idle" id="0:31">
+            <KeyedObject objectId="0:10">
+                <KeyedProperty propertyKey="17"><KeyFrameDouble value="0.2" frame="0" interpolationType="hold"/></KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:12">
+                <KeyedProperty propertyKey="17"><KeyFrameDouble value="0.2" frame="0" interpolationType="hold"/></KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:14">
+                <KeyedProperty propertyKey="17"><KeyFrameDouble value="0.2" frame="0" interpolationType="hold"/></KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+
+        <StateMachine name="State Machine 1" id="0:20">
+            <StateMachineBool name="isPlaying" id="0:21" value="true"/>
+            <StateMachineLayer name="AudioLayer" id="0:22">
+                <AnyState x="400" y="0"/>
+                <ExitState x="500" y="0"/>
+                <EntryState x="0" y="0">
+                    <StateTransition stateToId="0:23"/>
+                </EntryState>
+                <AnimationState animationId="0:30" x="180" y="0" id="0:23">
+                    <StateTransition stateToId="0:24">
+                        <TransitionBoolCondition inputId="0:21" opValue="notEqual"/>
+                    </StateTransition>
+                </AnimationState>
+                <AnimationState animationId="0:31" x="340" y="0" id="0:24">
+                    <StateTransition stateToId="0:23">
+                        <TransitionBoolCondition inputId="0:21" opValue="equal"/>
+                    </StateTransition>
+                </AnimationState>
+            </StateMachineLayer>
+        </StateMachine>
+    </Artboard>
+</Rive>

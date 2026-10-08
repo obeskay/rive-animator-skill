@@ -1,0 +1,22 @@
+{
+  "name": "rive-animator",
+  "version": "1.0.0",
+  "description": "Code-first Rive animation toolkit: interactive recipes, direct SVG-to-RML converter, RML linter, binary inspector, and universal framework wiring across React, Vue, Svelte, Web Canvas, Flutter, SwiftUI, Android, and React Native.",
+  "author": {
+    "name": "ov",
+    "url": "https://github.com/obeskay"
+  },
+  "repository": "https://github.com/obeskay/rive-animator-skill",
+  "license": "MIT",
+  "keywords": [
+    "rive",
+    "animation",
+    "state-machines",
+    "vector-animation",
+    "micro-interactions",
+    "svg-to-rive",
+    "rml",
+    "interactive-ui"
+  ],
+  "skills": "./skills/"
+}

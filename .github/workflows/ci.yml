@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Tests and lint (Python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Run Unit Tests
+        run: python3 -m unittest discover -s tests -v
+
+      - name: Lint RML Scenes
+        run: python3 scripts/rml_lint.py examples/*/scene.rml
+
+      - name: Lint Shipped Binaries
+        run: |
+          for f in examples/*/build/*.riv; do
+            [ -f "$f" ] && python3 scripts/rive_lint.py "$f" --quiet || true
+          done

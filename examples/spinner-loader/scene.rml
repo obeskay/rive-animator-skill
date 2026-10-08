@@ -1,0 +1,45 @@
+<Rive version="1" kind="fragment">
+    <Artboard defaultStateMachineId="0:20" width="200" height="200" name="Spinner" id="0:1">
+        <Fill name="Background">
+            <SolidColor colorValue="00000000" name="Transparent"/>
+        </Fill>
+
+        <Shape x="100" y="100" name="Track" id="0:10">
+            <Ellipse width="100" height="100" originX="0.5" originY="0.5" name="Path"/>
+            <Stroke thickness="10" cap="round" name="TrackStroke">
+                <SolidColor colorValue="20FFFFFF" name="TrackColor"/>
+            </Stroke>
+        </Shape>
+
+        <Node x="100" y="100" name="Rotator" id="0:12">
+            <Shape x="0" y="0" name="Arc" id="0:13">
+                <Ellipse width="100" height="100" originX="0.5" originY="0.5" name="Path"/>
+                <Stroke thickness="10" cap="round" name="ArcStroke">
+                    <SolidColor colorValue="FF3B82F6" name="ArcColor"/>
+                    <TrimPath start="0" end="0.3" offset="0"/>
+                </Stroke>
+            </Shape>
+        </Node>
+
+        <LinearAnimation loopValue="loop" duration="60" name="Spin" id="0:30">
+            <KeyedObject objectId="0:12">
+                <KeyedProperty propertyKey="15">
+                    <KeyFrameDouble value="0" frame="0" interpolationType="linear"/>
+                    <KeyFrameDouble value="6.2831853" frame="60" interpolationType="linear"/>
+                </KeyedProperty>
+            </KeyedObject>
+        </LinearAnimation>
+
+        <StateMachine name="State Machine 1" id="0:20">
+            <StateMachineNumber name="speed" id="0:21" value="1"/>
+            <StateMachineLayer name="SpinnerLayer" id="0:22">
+                <AnyState x="400" y="0"/>
+                <ExitState x="500" y="0"/>
+                <EntryState x="0" y="0">
+                    <StateTransition stateToId="0:23"/>
+                </EntryState>
+                <AnimationState animationId="0:30" x="180" y="0" id="0:23"/>
+            </StateMachineLayer>
+        </StateMachine>
+    </Artboard>
+</Rive>
