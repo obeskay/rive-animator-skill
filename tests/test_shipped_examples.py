@@ -28,6 +28,9 @@ class TestShippedExamples(unittest.TestCase):
                 rml_issues = rml_lint.lint_rml_text(rml_text, filename=rml_file.name)
                 rml_errors = [i for i in rml_issues if i.severity == rml_lint.ERROR]
                 self.assertEqual(len(rml_errors), 0, f"RML errors in {ex_dir.name}: {[e.message for e in rml_errors]}")
+                # shipped recipes are the examples people copy: no dead inputs, snaps or seams either
+                motion = [i for i in rml_issues if i.code in ("RML004", "RML011", "RML012", "RML013")]
+                self.assertEqual(motion, [], f"{ex_dir.name}: {[i.message for i in motion]}")
 
                 # Lint compiled binary if present
                 riv_files = list(ex_dir.glob("build/*.riv"))
@@ -37,6 +40,15 @@ class TestShippedExamples(unittest.TestCase):
                         self.assertIsNotNone(result, f"Failed to parse binary {riv_path}")
                         blocking = [i for i in issues if i["severity"] == rive_lint.ERROR]
                         self.assertEqual(len(blocking), 0, f"Binary error in {riv_path.name}: {blocking}")
+
+    def test_generated_scene_matches_its_generator(self):
+        import importlib.util
+        mascot = EXAMPLES_DIR / "living-mascot"
+        spec = importlib.util.spec_from_file_location("mascot_build", mascot / "build.py")
+        build = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(build)
+        self.assertEqual((mascot / "scene.rml").read_text(), build.SCENE,
+                         "scene.rml is stale: run python3 examples/living-mascot/build.py")
 
 
 if __name__ == "__main__":

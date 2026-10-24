@@ -1,38 +1,31 @@
 # Brand: rive-animator
 
-Interactive vector state machines are small programs running on real canvas runtimes, not static pictures.
-
-The visual identity embodies this: glowing electric cyan (`#00d2ff`) and violet bezier curves, interconnected reactive state machine nodes, precision tangent handles, and deep graphite obsidian space (`#08080a`).
-
-## Palette
+Paper and ink. The images sit directly on GitHub's own canvas (white, or `#0D1117` in dark
+mode), so nothing is boxed and nothing glows. Life comes from motion, not from effects.
 
 | Token | Hex | Use |
 |---|---|---|
-| Ink | `#08080a` | Background. Near-black graphite, never pure `#000`. |
-| Paper | `#f4f2ee` | Wordmark and primary text. Warm off-white. |
-| Cyan Pulse | `#00d2ff` | Primary accent dot, glowing state transitions. |
-| Violet Lattice | `#8b5cf6` | State node clusters and secondary glow. |
-| Muted | `#c2bcb4` | Tagline text. |
-| Faint | `#00d2ff` (0.85) | Monospace footnote. |
+| Ink | `#1F1C19` | Wordmark on light, eyes, mouth |
+| Paper | `#F4F1EA` | Wordmark on dark |
+| Cell | `#F6F3EE` / `#151A21` | Recipe tiles, light / dark |
+| Ember | `#E4572E` | The accent: the wordmark's block, the mascot, active states |
+| Amber | `#F2A93B` | Rating, badges, sparks |
+| Sage | `#6F8F72` | Success, toggled on, the sprout |
+| Stone | `#8E877E` | Inactive states; at 22–25% alpha, tracks and the shadow (it reads on both canvases) |
 
-## Wordmark
+Wordmark: `rive-animator` in Helvetica Neue Bold, `-0.045em` tracking, followed by a drawn ember
+block with continuous-curvature corners, never a typed period. Tiles use `corner-shape:
+superellipse(1.6)`.
 
-`rive-animator` set in Helvetica Neue Bold at `-0.045em` tracking, followed by a **drawn glowing rounded cyan block** (`#00d2ff`), never a typed period.
+Mascot: `examples/living-mascot`, a coral gumdrop with a sprout. It is the hero, the social card
+and the worked example of `references/living-motion.md`.
 
-## Regenerating Banners
+## Regenerating
 
 ```bash
-node assets/banner.mjs assets/build
-
-"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
-  --headless=new --hide-scrollbars --force-device-scale-factor=2 \
-  --window-size=1200,400 --screenshot=assets/banner-en.jpg "file://$PWD/assets/build/banner-en.html"
-
-"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
-  --headless=new --hide-scrollbars --force-device-scale-factor=2 \
-  --window-size=1200,400 --screenshot=assets/banner-es.jpg "file://$PWD/assets/build/banner-es.html"
-
-"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
-  --headless=new --hide-scrollbars --force-device-scale-factor=2 \
-  --window-size=1200,400 --screenshot=assets/banner-zh.jpg "file://$PWD/assets/build/banner-zh.html"
+npm run build:examples        # compiles every recipe, regenerating the mascot from build.py
+node scripts/make-gifs.mjs    # hero.gif, hero-dark.gif, recipes.gif, recipes-dark.gif, social.png
+node scripts/make-gifs.mjs --sheet   # also contact sheets in build/sheets/ to read before committing
 ```
+
+`social.png` is GitHub's social preview (1280×640): upload it in the repository settings.

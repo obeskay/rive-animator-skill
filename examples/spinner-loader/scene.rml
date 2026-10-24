@@ -1,43 +1,84 @@
 <Rive version="1" kind="fragment">
-    <Artboard defaultStateMachineId="0:20" width="200" height="200" name="Spinner" id="0:1">
+    <Artboard defaultStateMachineId="0:20" width="200" height="200" name="Spinner" styleId="0:2" id="0:1">
+        <LayoutComponentStyle name="Artboard Style" id="0:2"/>
         <Fill name="Background">
-            <SolidColor colorValue="00000000" name="Transparent"/>
+            <SolidColor colorValue="00000000" name="Clear"/>
         </Fill>
 
         <Node x="100" y="100" name="Rotator" id="0:12">
-            <Shape x="0" y="0" name="Arc" id="0:13">
+            <Shape name="Arc" id="0:13">
                 <Ellipse width="100" height="100" originX="0.5" originY="0.5" name="Path"/>
                 <Stroke thickness="10" cap="round" name="ArcStroke">
-                    <SolidColor colorValue="FFC8522B" name="ArcColor"/>
-                    <TrimPath start="0" end="0.3" offset="0"/>
+                    <SolidColor colorValue="FFE4572E" name="Ember"/>
+                    <TrimPath start="0" end="0.03" offset="0" id="0:14"/>
                 </Stroke>
             </Shape>
         </Node>
 
         <Shape x="100" y="100" name="Track" id="0:10">
             <Ellipse width="100" height="100" originX="0.5" originY="0.5" name="Path"/>
-            <Stroke thickness="10" cap="round" name="TrackStroke">
-                <SolidColor colorValue="FFE4D9C6" name="TrackColor"/>
+            <Stroke thickness="10" name="TrackStroke">
+                <SolidColor colorValue="388E877E" name="Track"/>
             </Stroke>
         </Shape>
 
-        <LinearAnimation loopValue="loop" duration="60" name="Spin" id="0:30">
+        <LinearAnimation loopValue="loop" duration="240" name="Spin" id="0:30">
             <KeyedObject objectId="0:12">
                 <KeyedProperty propertyKey="15">
                     <KeyFrameDouble value="0" frame="0" interpolationType="linear"/>
-                    <KeyFrameDouble value="6.2831853" frame="60" interpolationType="linear"/>
+                    <KeyFrameDouble value="12.566371" frame="240" interpolationType="linear"/>
+                </KeyedProperty>
+            </KeyedObject>
+            <KeyedObject objectId="0:14">
+                <KeyedProperty propertyKey="115">
+                    <KeyFrameDouble value="0.03" frame="0" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.77" y1="0" x2="0.175" y2="1"/>
+                    </KeyFrameDouble>
+                    <KeyFrameDouble value="0.696667" frame="44" interpolationType="hold"/>
+                    <KeyFrameDouble value="0.03" frame="80" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.77" y1="0" x2="0.175" y2="1"/>
+                    </KeyFrameDouble>
+                    <KeyFrameDouble value="0.696667" frame="124" interpolationType="hold"/>
+                    <KeyFrameDouble value="0.03" frame="160" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.77" y1="0" x2="0.175" y2="1"/>
+                    </KeyFrameDouble>
+                    <KeyFrameDouble value="0.696667" frame="204" interpolationType="hold"/>
+                    <KeyFrameDouble value="0.03" frame="240" interpolationType="hold"/>
+                </KeyedProperty>
+                <KeyedProperty propertyKey="114">
+                    <KeyFrameDouble value="0" frame="0" interpolationType="hold"/>
+                    <KeyFrameDouble value="0" frame="28" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.77" y1="0" x2="0.175" y2="1"/>
+                    </KeyFrameDouble>
+                    <KeyFrameDouble value="0.666667" frame="79" interpolationType="hold"/>
+                    <KeyFrameDouble value="0" frame="80" interpolationType="hold"/>
+                    <KeyFrameDouble value="0" frame="108" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.77" y1="0" x2="0.175" y2="1"/>
+                    </KeyFrameDouble>
+                    <KeyFrameDouble value="0.666667" frame="159" interpolationType="hold"/>
+                    <KeyFrameDouble value="0" frame="160" interpolationType="hold"/>
+                    <KeyFrameDouble value="0" frame="188" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.77" y1="0" x2="0.175" y2="1"/>
+                    </KeyFrameDouble>
+                    <KeyFrameDouble value="0.666667" frame="239" interpolationType="hold"/>
+                    <KeyFrameDouble value="0" frame="240" interpolationType="hold"/>
+                </KeyedProperty>
+                <KeyedProperty propertyKey="116">
+                    <KeyFrameDouble value="0" frame="0" interpolationType="cubic">
+                        <CubicEaseInterpolator x1="0.77" y1="0" x2="0.175" y2="1"/>
+                    </KeyFrameDouble>
+                    <KeyFrameDouble value="0.666667" frame="80" interpolationType="hold"/>
+                    <KeyFrameDouble value="0.333333" frame="160" interpolationType="hold"/>
+                    <KeyFrameDouble value="0" frame="240" interpolationType="hold"/>
                 </KeyedProperty>
             </KeyedObject>
         </LinearAnimation>
 
         <StateMachine name="State Machine 1" id="0:20">
-            <StateMachineNumber name="speed" id="0:21" value="1"/>
-            <StateMachineLayer name="SpinnerLayer" id="0:22">
-                <AnyState x="400" y="0"/>
-                <ExitState x="500" y="0"/>
-                <EntryState x="0" y="0">
-                    <StateTransition stateToId="0:23"/>
-                </EntryState>
+            <StateMachineLayer name="Spin" id="0:22">
+                <AnyState x="560" y="-120"/>
+                <ExitState x="680" y="-120"/>
+                <EntryState x="0" y="0"><StateTransition stateToId="0:23"/></EntryState>
                 <AnimationState animationId="0:30" x="180" y="0" id="0:23"/>
             </StateMachineLayer>
         </StateMachine>

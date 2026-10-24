@@ -1,195 +1,179 @@
 ---
 name: rive-animator
 description: >-
-  Create, inspect, lint, and repair Rive (.riv) files, RML scenes, and State Machines.
-  Use when asked to build an interactive vector animation or UI component from a brief or an SVG;
-  convert SVG/Lottie to Rive RML; inspect an existing .riv binary (artboards, animations, state machines,
-  inputs, listeners, view models); generate copy-paste runtime wiring across React, Vue, Svelte, Web Canvas,
-  Flutter, iOS/SwiftUI, Android Kotlin, and React Native; or diagnose a Rive component that renders blank,
-  ignores clicks, or fails to transition.
+  Create, animate, inspect, lint, and repair Rive (.riv) files, RML scenes, and State Machines, and make
+  them feel alive. Use when asked to build an interactive vector animation, mascot, or UI component from a
+  brief or an SVG; give a character idle life (breathing, blinks, gaze, follow-through) or a control motion
+  that never snaps; convert SVG/Lottie to Rive RML; inspect an existing .riv binary (artboards, animations,
+  state machines, inputs, listeners, view models); generate copy-paste runtime wiring across React, Vue,
+  Svelte, Web Canvas, Flutter, iOS/SwiftUI, Android Kotlin, and React Native; record README GIFs from the
+  real runtime; or diagnose a Rive component that renders blank, ignores clicks, snaps, or fails to transition.
 allowed-tools: Read, Write, Edit, Bash, Glob, Grep
 ---
 
 # Rive Animator
 
-A `.riv` is a small interactive program, not a static picture: artboards, timelines, and a state machine deciding which timeline plays and when. The failures that cost time never raise an error:
+A `.riv` is a small interactive program, not a picture: artboards, timelines, and a state machine
+deciding which timeline plays and when. The failures that cost time never raise an error:
 
-- **The file is not what was asked for.** It builds and loads something — with a state that has no way out, a colour keyed by a double keyframe, an angle entered as degrees instead of radians, or a listener aimed at nothing.
-- **The host wires it wrong.** An input name off by one letter, the wrong state machine, or a canvas at 0×0. The runtime plays the first animation and stays silent.
+- **The file is not what was asked for.** It builds and loads, with a state that has no way out, an
+  input nothing reads, a pose it snaps to, a loop that pops at its seam, or an angle in degrees.
+- **The host wires it wrong.** An input name off by one letter, the wrong state machine, a canvas
+  at 0×0. The runtime plays the first animation and stays silent.
+- **It works and feels dead.** Everything moves in sync, every pose stops dead, colours swap,
+  nothing breathes between actions.
 
-Never type a state machine name or input identifier from memory, and never claim it works without having rendered and interacted with it.
+Never type a state machine or input name from memory, and never claim it works without having
+rendered and interacted with it.
 
 ---
 
-## The animation toolbox: pick by the job, combine for the feeling
+## Make it alive
 
-Top-tier craft separates an app from lifeless AI slop. Never ask for "generic animation" — select the exact technique from the toolbox and layer them together:
+The method is in [references/living-motion.md](references/living-motion.md) (rossark's motion
+method, translated to RML). The rules that matter most:
 
-| Archetype | Pick When | Role in Composition |
-|---|---|---|
-| **Keyframes** | Choreographing a fixed timeline sequence | Internal Rive timelines: X/Y travel, scale pop, opacity, colors |
-| **Springs** | UI controls need organic responsiveness | Host-level settling, button feedback, sheet dismissals |
-| **Gestures** | Direct manipulation follows pointer/touch | Host tracking streamed into Rive `StateMachineNumber` (`tiltX`, `tiltY`) |
-| **Physics** | Dynamic forces, collisions, gravity | Bound collisions, ragdoll dynamics, rolling elements |
-| **SVG Paths** | Drawing curves, spline travel, morphing | Vector contour deformation, `followPath`, organic background masks |
-| **Layout Transitions** | Reordering, expanding, connecting views | Native FLIP / View Transitions when elements shift |
-| **Rive / Lottie** | Interactive vector runtime | Stateful characters, triggers, multi-layer inputs, nested artboards |
-| **Skeletal Rigs** | Posing connected characters | Hierarchical bone joints, IK/FK character poses |
-| **Particles** | Milestone celebrations & bursts | Confetti, starbursts, achievement bursts fired on Rive events |
-| **Shaders** | Pixel-level transformations | Glass refractions, liquid warps, dynamic blurs behind surfaces |
+1. **Never teleport.** A transition into a one-frame pose needs `duration` (ms) and a cubic
+   interpolator; colours blend with `KeyFrameColor interpolationType="linear"`; `hold` is the
+   default and snaps.
+2. **Pivots, and keyed values are absolute.** Animate a node inside a parent placed at the joint,
+   so its rest value is `0`. Keying `y` on a node authored at `y="262"` moves it to `0`.
+3. **One main action, two or three idle loops, one layer each.** Layers key their own nodes in a
+   nested chain (`Ground › Hop › Breath › Lean`), so idle life never stops during the action.
+4. **Poses flow, they don't stop.** Key a chain of poses with `flow`, a single move with `track`,
+   anything computed (breathing, follow-through by delay, seeded waves) with `bake`:
 
-> **The Composition Rule**: Real delight comes from layering. Combine a Rive state machine character + an SVG path morphing background mask + 3D parallax depth + host gesture tilt + spring snap landing + particle celebration.
-> Full guide: [references/animation-toolbox-cheatsheet.md](references/animation-toolbox-cheatsheet.md).
+   ```bash
+   python3 scripts/motion_keys.py flow 0:1 9:0.86 15:1.1 44:0.8 52:1.04 76:1   # crouch, stretch, squash, settle
+   python3 scripts/motion_keys.py track 0:1 7:0.1 9:0.1 20:1:out               # a blink: 7 / 2 / 11 frames
+   python3 scripts/motion_keys.py wave --base 1 --amp 0.016 --period 120 --length 240
+   ```
+   `flow` and `bake` write exact `cubicValue` Hermite segments, verified against the renderer.
+5. **Frequency decides how much.** Controls seen tens of times a day get a fast, small change and
+   then rest; characters, rewards and empty states get the life.
+6. **The rest pose is the authored pose**, for reduced motion and for hosts that never start the
+   machine. One-shots must read on their final frame.
+
+`examples/living-mascot/build.py` is the worked example: tokens at the top, four layers, a gaze
+blend driven by the host, a hop acted through poses.
 
 ---
 
 ## Fast path: start from a recipe
 
-
-`examples/` holds ready-to-run interactive recipes. Each has its own `rive.yaml`, `scene.rml`, and compiled `.riv` binary. Starting from the nearest one beats a blank page:
+`examples/` holds ready-to-run recipes, each a `rive.yaml`, a `scene.rml` and a compiled `.riv`:
 
 | Component | Directory | Inputs | What it teaches |
 |---|---|---|---|
-| **Toggle Switch** | `examples/toggle-switch` | Trigger `tap` | Hardware-feel switch with 240 ms cubic ease and click listener |
-| **Spinner Loader** | `examples/spinner-loader` | Number `speed` | Indeterminate circular chase with trim path and speed control |
-| **Success Check** | `examples/success-check` | Trigger `fire` | Settling disc + trim-draw checkmark on trigger fire |
-| **Like Button** | `examples/like-heart` | Boolean `liked` | Cubic scale pop (0.8 → 1.25 → 1.0) and state colour transition |
-| **Rating Star** | `examples/rating-star` | Number `rating` | Parametric 5-point Star scaling and filling based on value |
-| **Progress Ring** | `examples/progress-ring` | Number `progress` | Circular progress arc driven by 0–100 numerical value |
-| **Audio Equalizer** | `examples/audio-equalizer` | Boolean `isPlaying` | 3 phase-offset bars bouncing upwards (`originY="1.0"`) |
-| **Tab Bar Icon** | `examples/tab-bar-item` | Boolean `active`, Trigger `tap` | 2-layer state machine: color selection + spring bounce |
+| **Living Mascot** | `examples/living-mascot` | Number `lookX`, Trigger `poke` (and a click listener) | Four layers: breath, blinks, a gaze blend, a hop with squash, stretch and follow-through |
+| **Toggle Switch** | `examples/toggle-switch` | Trigger `tap` (click listener) | Pose states with a 240 ms mix; a knob that stretches with its travel on a second layer |
+| **Like Button** | `examples/like-heart` | Boolean `liked` | Anticipation, pop and settle in one `flow`; colour blend; seeded spark burst; faster exit |
+| **Success Check** | `examples/success-check` | Trigger `fire` (toggles) | In from 0.92 with opacity, check drawn on; a second fire returns to rest |
+| **Progress Ring** | `examples/progress-ring` | Number `progress` 0–100 | A `BlendState1DInput` on the value; completion as its own layer |
+| **Tab Bar Bell** | `examples/tab-bar-item` | Boolean `active`, Trigger `tap` | Colour and badge on one layer, a hinge swing with a clapper that follows on another |
+| **Rating Star** | `examples/rating-star` | Number `rating` | Outline to fill blend, a 72° twist that never rewinds, sparks on rays |
+| **Audio Equalizer** | `examples/audio-equalizer` | Boolean `isPlaying` | Five bars on seeded wave pairs, a 320 ms mix to an asymmetric rest |
+| **Spinner Loader** | `examples/spinner-loader` | none, mount it while loading | Linear rotation plus a trim chase that closes in three cycles |
 
 ```bash
-# Copy and adapt an existing recipe
-cp -R examples/toggle-switch my-switch
-# Edit my-switch/scene.rml, then verify and build
-rive my-switch --verify
-rive my-switch --once
+cp -R examples/toggle-switch my-switch     # then edit my-switch/scene.rml
+python3 scripts/rml_lint.py my-switch/scene.rml
+rive my-switch --verify && rive my-switch --once
 ```
 
 ---
 
-## Toolchain overview
+## Toolchain
 
-| Task | Command | Description |
+| Task | Command | Notes |
 |---|---|---|
-| **Convert SVG to Rive** | `python3 scripts/svg2rml.py logo.svg -o proj/scene.rml` | Zero-dependency direct converter: paths, circles, rects, gradients |
-| **Convert Lottie to Rive** | `python3 scripts/lottie2rml.py anim.json -o proj/scene.rml` | Turns Lottie JSON into RML with detached cubic vertices |
-| **Pre-flight RML Lint** | `python3 scripts/rml_lint.py proj/scene.rml` | Checks degrees vs radians, missing state machines, color keyframes |
-| **Compile & Verify** | `rive proj --verify` | Rive CLI verification: validates syntax and imports |
-| **Inspect & Wire Binary** | `python3 scripts/rive_lint.py proj/build/proj.riv` | Deep binary inspection + copy-paste runtime wiring |
-| **Multi-Framework Wiring** | `python3 scripts/rive_lint.py file.riv -f <platform>` | Generates code for React, Vue, Svelte, Web, Flutter, SwiftUI, Android, RN |
-| **Record Interactive GIFs** | `node scripts/make-gifs.mjs [name]` | Headless Puppeteer + Rive canvas-advanced scripted session recording |
+| **Bake motion keys** | `python3 scripts/motion_keys.py flow\|track\|wave …` | Also importable: `bake`, `keyed`, `wave`, `seeded` |
+| **Convert SVG to Rive** | `python3 scripts/svg2rml.py logo.svg -o proj/scene.rml` | Paths, circles, rects, gradients, transforms |
+| **Convert Lottie to Rive** | `python3 scripts/lottie2rml.py anim.json -o proj/scene.rml` | Detached cubic vertices |
+| **Pre-flight RML lint** | `python3 scripts/rml_lint.py proj/scene.rml` | Degrees, colours, dead inputs, snaps, loop seams |
+| **Compile and verify** | `rive proj --verify`, `rive inspect proj --json` | Run both; neither is a superset |
+| **Inspect and wire a binary** | `python3 scripts/rive_lint.py file.riv -f <platform>` | Exact names and copy-paste wiring for 8 platforms |
+| **Record README GIFs** | `node scripts/make-gifs.mjs [hero\|recipes] [--sheet]` | Real runtime, scripted inputs and cursor, 50 fps, seamless loops |
+
+Python scripts use only the standard library.
 
 ---
 
-## Authoring: write → verify → inspect → screenshot → look
+## Authoring: write → lint → verify → render → read
 
 ```bash
-rive create mascot                           # creates rive.yaml + scene.rml
-python3 scripts/rml_lint.py mascot/scene.rml # pre-flight check before compilation
-rive mascot --verify                         # compiles and re-imports; exit 1 on errors
-rive mascot --once                           # builds mascot/build/mascot.riv
+rive create mascot                               # rive.yaml + scene.rml
+python3 scripts/rml_lint.py mascot/scene.rml     # before compiling
+rive mascot --verify                             # compiles and re-imports; exit 1 on errors
+rive inspect mascot --json | jq .problems        # wiring problems: want []
+rive mascot --once                               # mascot/build/mascot.riv
 python3 scripts/rive_lint.py mascot/build/mascot.riv --framework react
 
-# Visual verification: screenshots at different states must differ
-mkdir -p mascot/build
-rive mascot --screenshot=mascot/build/f1.png  --advance=1
-rive mascot --screenshot=mascot/build/f30.png --advance=30
-rive mascot --screenshot=mascot/build/on.png  --pointer=click@120,60 --advance=20
+for n in 1 30 60; do rive mascot --screenshot=mascot/build/f$n.png --advance=$n; done
+rive mascot --screenshot=mascot/build/hit.png --pointer=click@120,60 --advance=20
 ```
 
-Read the PNGs. A loop is at rest on frame 0, so one screenshot proves nothing: two at different times must differ. A control must look different after a click and the same again after a second one.
+Read the PNGs. `--advance=N` shows animation time `N-1`. A loop is at rest on frame 0, so one
+screenshot proves nothing: two at different times must differ. A control must look different
+after a click and the same again after a second one. Inputs without listeners cannot be driven
+from the CLI: record them with `scripts/make-gifs.mjs`, which sets them in the real runtime.
 
-Before writing RML, read `rive docs format` and `references/rml-authoring.md`. Before keying any attribute, check `rive schema <Type>`.
+Before writing RML, read `rive docs format` and [references/rml-authoring.md](references/rml-authoring.md).
+Before keying any attribute, check `rive schema <Type>`.
 
-### The 5-beat choreography & rest invariant
+**Inputs or view models.** `StateMachineBool/Number/Trigger` are deprecated for new top-level files:
+drive those with view model properties (`rive docs data`). Inputs remain right for a component's own
+behaviour once it is nested, because a nested artboard does not bind its own view model. The recipes
+use inputs because each is a nestable component.
 
-When authoring actions for characters or controls:
-1. **Rest Invariant**: Every state machine must have an explicit Resting state. Actions must be closed loops (`Rest -> Action -> Rest`) using `enableExitTime="true"` so they never latch.
-2. **5-Beat Choreography**:
-   - **Beat 1 (Rest)**: Settled baseline pose.
-   - **Beat 2 (Anticipation)**: Subtle recoil or counter-motion before the action.
-   - **Beat 3 (Apex)**: Peak displacement and expression.
-   - **Beat 4 (Settle)**: Secondary overshoot / dampening.
-   - **Beat 5 (Return)**: Smooth resolution back to Rest.
-3. **Visual Edge-Case Audit**: Inspect captures for artboard clipping, jagged vector tangents, latching states, and abrupt non-eased transitions.
+### The rest invariant and the five beats
 
----
-
-
-## Starting from an SVG
-
-Convert any SVG icon, logo, or illustration into an interactive Rive project in one command:
-
-```bash
-# 1. Convert SVG directly to RML scene
-python3 scripts/svg2rml.py logo.svg --size 200 --name "Logo" -o rive-logo/scene.rml
-printf 'name: rive-logo\n' > rive-logo/rive.yaml
-
-# 2. Verify and build
-rive rive-logo --verify && rive rive-logo --once
-
-# 3. Inspect binary and get copy-paste wiring
-python3 scripts/rive_lint.py rive-logo/build/rive-logo.riv
-```
-
-`svg2rml.py` converts SVG paths, rects, circles, ellipses, lines, polylines, polygons, groups, transforms, fills, and strokes into RML `<Shape>`, `<PointsPath>`, `<CubicDetachedVertex>`, `<Fill>`, and `<Stroke>`. The output includes an active placeholder timeline and a default state machine so it is alive on load.
+1. **Rest invariant.** Every layer has an explicit resting state, and every action closes:
+   `Rest → Action → Rest`, with `enableExitTime="true"` on the way back, or a pose transition with a
+   mix. Nothing latches.
+2. **Five beats** for an action: rest, anticipation (a small counter-motion), apex, settle, return.
+   Key them as one `flow` channel so the motion never stops between beats.
 
 ---
 
 ## Universal runtime wiring
 
-Pass `-f / --framework` to `scripts/rive_lint.py` to get exact copy-paste integration:
-
 ```bash
-python3 scripts/rive_lint.py public/mascot.riv -f react
-python3 scripts/rive_lint.py public/mascot.riv -f flutter
-python3 scripts/rive_lint.py public/mascot.riv -f swiftui
-python3 scripts/rive_lint.py public/mascot.riv -f vue
-python3 scripts/rive_lint.py public/mascot.riv -f svelte
-python3 scripts/rive_lint.py public/mascot.riv -f all
+python3 scripts/rive_lint.py public/mascot.riv -f react     # also vue, svelte, web, flutter,
+python3 scripts/rive_lint.py public/mascot.riv -f all       # swiftui, android, react-native
 ```
 
-Supported frameworks:
-- `react`: `@rive-app/react-canvas`
-- `vue`: `@rive-app/canvas` with Vue 3 `ref` and `onMounted`
-- `svelte`: `@rive-app/canvas` with Svelte `onMount`
-- `web`: Vanilla HTML5 canvas with `@rive-app/canvas`
-- `flutter`: `rive` package with `StateMachineController`
-- `swiftui`: `RiveRuntime` iOS/macOS with `RiveViewModel`
-- `android`: `app.rive:rive-android` with `RiveAnimationView`
-- `react-native`: `@rive-app/react-native`
-- `all`: Prints copy-paste snippets for all frameworks side by side
-
-Full patterns and examples: [references/universal-framework-wiring.md](references/universal-framework-wiring.md).
+Full patterns: [references/universal-framework-wiring.md](references/universal-framework-wiring.md).
 
 ---
 
-## Common traps and defects
+## Common traps
 
 | Symptom | Code | Cause | Fix |
 |---|---|---|---|
-| **Canvas blank, no error** | `RV012` | Container CSS is 0×0; or Artboard width/height is 0; or URL returned 404 HTML | Set positive CSS size on container; check `rive_lint.py` |
-| **Draws but never reacts** | `RV005` | State machine has no inputs and no listeners; or host used wrong input name | Copy exact strings from `rive_lint.py`; check state machine layers |
-| **Reacts once, never returns** | `RV009` | Return transition was never authored (one-way trap) | Two clicks or state flip must return component to rest |
-| **Spins 57 times / crazy speed** | `RML004` | Rotation keyed in **degrees** instead of **radians** | Rive expects radians: 360° is `6.2831853` rad (`2 * math.pi`) |
-| **Colour never animates** | `RML008` | `KeyFrameDouble` placed on a Color property | Use `KeyFrameColor` with ARGB hex value (e.g. `FFEF4444`) |
-| **Shape invisible** | `RML007` | `<Fill>` declared without `<SolidColor>` or gradient child; or covered by opaque sibling | Add `<SolidColor colorValue="..."/>`; declared first draws on top |
-| **Blurry on Retina/HiDPI** | - | Canvas drawn at 1× DPR | Web: `r.resizeDrawingSurfaceToCanvas()`; React handles automatically |
+| **Canvas blank, no error** | `RV012`, `RV001` | Artboard 0×0 (`RV012`), a 404 page or LFS pointer served as `.riv` (`RV001`), or a container with no CSS size (no code: check the layout) | Size the container; run `rive_lint.py` |
+| **Draws but never reacts** | `RV005` | No inputs and no listeners, or the host used a wrong name | Copy names from `rive_lint.py` |
+| **Host sets an input, nothing moves** | `RML011` | The input is declared but no condition, listener or blend reads it | Wire it, or delete it |
+| **Snaps between states** | `RML012` | A transition into a one-frame pose with no `duration` | `duration="160"`–`"300"` plus a cubic interpolator |
+| **Pops once per loop** | `RML013` | A `loop` whose last key differs from its first | Close the loop, or `pingPong` |
+| **Thrown off the artboard** | — | A keyed `x`/`y` replaces the authored value | Animate a child of a node at the pivot |
+| **Reacts once, never returns** | — | The return transition was never authored; no linter sees it | Render two clicks: the second must return to rest |
+| **Spins 57 times** | `RML004` | Rotation in degrees, as an attribute or a keyframe value | Radians: a full turn is `6.2831853` |
+| **Colour never animates** | `RML008` | `KeyFrameDouble` on `colorValue` (key 37) | `KeyFrameColor` with ARGB hex |
+| **Shape invisible** | `RML007` | `<Fill>` without paint, or covered: the first sibling paints on top | Add `<SolidColor>`; reorder |
+| **White seam on a closed eye** | — | A catchlight squashed with the lid | Fade it out during the blink |
 
-Full defect catalog with remedies: [references/defect-ledger.md](references/defect-ledger.md).
+Full catalog: [references/defect-ledger.md](references/defect-ledger.md).
 
 ---
 
 ## Finishing checklist
 
-Before declaring an animation finished:
-
-1. `python3 scripts/rml_lint.py <scene.rml>` reports no errors.
-2. `rive <dir> --verify` exits with code 0 and 0 warnings.
-3. Screenshots at two distinct timestamps differ (proves motion is alive).
-4. After-again gesture matches rest state (proves interactive state machine doesn't latch).
-5. All input names in host code came directly from `rive_lint.py`, never from memory.
-6. The taste pass in [references/motion-taste.md](references/motion-taste.md) was checked: zero overshoot on UI switches, natural easing, one hero property, restrained palette.
-7. Report what was rendered and verified.
+1. `rml_lint.py` reports no errors and no `RML011`–`RML013` warnings you cannot explain.
+2. `rive <dir> --verify` exits 0 and `rive inspect <dir> --json` reports `problems: []`.
+3. Renders at two times differ; frame 0 is a good drawing; each one-shot reads on its last frame.
+4. A second gesture returns the component to rest.
+5. Input names in host code came from `rive_lint.py`.
+6. The alive checklist in [references/living-motion.md](references/living-motion.md#5-characters)
+   and the taste pass in [references/motion-taste.md](references/motion-taste.md) both pass.
+7. Report what was rendered and verified, and what was not seen on a real device.

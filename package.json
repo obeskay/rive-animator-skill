@@ -1,15 +1,15 @@
 {
   "name": "rive-animator-skill",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
-  "description": "Code-first Rive toolkit for AI coding agents and developers: recipes, SVG-to-RML converter, RML linter, binary inspector, and universal framework runtime wiring.",
+  "description": "Code-first Rive toolkit for AI coding agents and developers: nine living recipes, a motion baker (flow, track, wave as exact keyframes), SVG and Lottie to RML, a linter for silent traps, a binary inspector, and runtime wiring for React, Vue, Svelte, Web Canvas, Flutter, SwiftUI, Android and React Native.",
   "type": "module",
   "license": "MIT",
   "scripts": {
     "test": "python3 -m unittest discover -s tests -v",
     "lint:rml": "python3 scripts/rml_lint.py examples/*/scene.rml",
     "lint:riv": "python3 scripts/rive_lint.py examples/*/build/*.riv",
-    "build:examples": "for d in examples/*; do [ -d \"$d\" ] && rive \"$d\" --once; done",
+    "build:examples": "python3 examples/living-mascot/build.py && for d in examples/*; do [ -d \"$d\" ] && rive \"$d\" --once; done",
     "gifs": "node scripts/make-gifs.mjs"
   },
   "keywords": [
@@ -22,7 +22,8 @@
     "ui-animation",
     "rml",
     "claude-skill",
-    "antigravity-skill"
+    "antigravity-skill",
+    "living-motion"
   ],
   "devDependencies": {
     "@rive-app/canvas-advanced": "2.44.0",

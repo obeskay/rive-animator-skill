@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Marketplace for Rive Animator plugin - Code-first interactive Rive animations and State Machines",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "plugins": [
     {
       "name": "rive-animator",
       "source": "./",
-      "description": "Code-first Rive animation toolkit: interactive recipes, direct SVG-to-RML converter, RML linter, binary inspector, and universal framework wiring across React, Vue, Svelte, Web Canvas, Flutter, SwiftUI, Android, and React Native.",
-      "version": "1.0.0",
+      "description": "Code-first Rive toolkit for AI coding agents and developers: nine living recipes, a motion baker (flow, track, wave as exact keyframes), SVG and Lottie to RML, a linter for silent traps, a binary inspector, and runtime wiring for React, Vue, Svelte, Web Canvas, Flutter, SwiftUI, Android and React Native.",
+      "version": "1.1.0",
       "author": {
         "name": "ov"
       },

@@ -12,10 +12,13 @@ We welcome contributions of new recipes, framework wiring adapters, converter im
    rive examples/<component-name> --verify
    rive examples/<component-name> --once
    ```
-3. Run the linter:
+3. Run both linters and read the renders:
    ```bash
+   python3 scripts/rml_lint.py examples/<component-name>/scene.rml
    python3 scripts/rive_lint.py examples/<component-name>/build/<component-name>.riv
    ```
+   Then add a script for it to `RECIPES` in `scripts/make-gifs.mjs`, ending in the state it started
+   in, and check `node scripts/make-gifs.mjs recipes --sheet`.
 4. Run the test suite:
    ```bash
    python3 -m unittest discover -s tests -v
@@ -25,5 +28,7 @@ We welcome contributions of new recipes, framework wiring adapters, converter im
 
 - **Standard Library Only:** Scripts in `scripts/` must run in Python 3.8+ using only Python standard library modules. Zero third-party pip dependencies.
 - **Radians for Rotation:** Always verify rotational keyframes use radians (`0` to `6.2831853`), never degrees.
+- **Alive, not busy:** follow `references/living-motion.md`. No snaps to poses, no dead inputs,
+  loops that close; key computed motion with `scripts/motion_keys.py`.
 - **Two-way State Machines:** Always ensure states have a clear return transition so the component never latches or freezes.
 - **Verified Before Shipped:** Never commit a recipe that hasn't been verified with `--verify`.

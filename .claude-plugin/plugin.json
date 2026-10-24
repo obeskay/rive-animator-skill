@@ -1,7 +1,7 @@
 {
   "name": "rive-animator",
-  "version": "1.0.0",
-  "description": "Code-first Rive animation toolkit: interactive recipes, direct SVG-to-RML converter, RML linter, binary inspector, and universal framework wiring across React, Vue, Svelte, Web Canvas, Flutter, SwiftUI, Android, and React Native.",
+  "version": "1.1.0",
+  "description": "Code-first Rive toolkit for AI coding agents and developers: nine living recipes, a motion baker (flow, track, wave as exact keyframes), SVG and Lottie to RML, a linter for silent traps, a binary inspector, and runtime wiring for React, Vue, Svelte, Web Canvas, Flutter, SwiftUI, Android and React Native.",
   "author": {
     "name": "ov",
     "url": "https://github.com/obeskay"

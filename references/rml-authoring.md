@@ -156,6 +156,11 @@ Everything here passes `--verify`. Most also pass `inspect`.
     author are absolute (`sourcePathIds="0:40-0:45"`).
 15. A missing asset file (`file="Font.ttf"`): nothing reports it; the text renders as
     nothing.
+16. A keyed `x`, `y` or `rotation` replaces the authored value. Key a child of a node placed at
+    the pivot so the rest value is `0`; keying `y="0"` on a node authored at `y="262"` moves it
+    off the artboard.
+17. A transition into a one-frame pose with no `duration` snaps (`RML012`), and an input
+    nothing reads is dead (`RML011`). Both build and inspect clean.
 
 ## Checks worth running
 

@@ -20,6 +20,11 @@
 | Content clipped at the edges | Artboard smaller than its own motion, or `Fit.Cover` | Grow the artboard; `Fit.Contain` |
 | Memory grows on route changes | Instances created in effects without `cleanup()` | Use the hook, or `rive.cleanup()` in the effect's return |
 | Screenshot shows the rest pose, not the animation | `--screenshot` with no `--advance` captures frame 0 before the machine ran | `--advance=1` at least; compare frames at two times |
+| Snaps between states | A transition into a one-frame pose with no `duration`; a `hold` keyframe; a colour swapped with `hold` | `duration="160"`–`"300"` with a cubic interpolator; `KeyFrameColor interpolationType="linear"` (`RML012`) |
+| Pops once per loop | A `loop` animation whose last key differs from its first | Close it, or `pingPong` (`RML013`) |
+| The host sets an input and nothing moves | The input is declared, but no condition, listener or blend state reads it | Wire it or delete it (`RML011`) |
+| A part jumps to the artboard corner when its animation starts | A keyed `x`/`y` replaces the authored value; a node authored at `y="262"` keyed to `0` goes to the top | Animate a child of a node placed at the pivot, so the rest value is `0` |
+| A white seam across a closed eye | The catchlight is squashed with the lid | Fade it out (opacity) while the lid is down |
 | Text renders as nothing | Font asset file missing on disk; `TextValueRun` without `styleId`; `TextStylePaint` without a `Fill` | `grep 'file="' *.rml` and check the disk; `rive docs text` |
 
 ## `rive_lint.py` codes
@@ -40,6 +45,23 @@ in a browser.
 | `RV009` | warn | State machine with no layers. |
 | `RV010` | warn | Animation with zero duration. |
 | `RV011` | warn | Input name has leading or trailing whitespace. |
+
+## `rml_lint.py` codes
+
+The source linter reads `scene.rml` before anything is built.
+
+| Code | Severity | Meaning |
+|---|---|---|
+| `RML001`–`RML003` | error / warn | Malformed XML, wrong root, duplicate ids. |
+| `RML004` | warn | A `rotation` attribute over 2π: degrees where radians belong. |
+| `RML005`, `RML010` | error | No artboard, or one with no positive size. |
+| `RML006` | info | Artboard without `defaultStateMachineId`. |
+| `RML007` | warn | `<Fill>` with no paint. |
+| `RML008` | error | `KeyFrameDouble` keying `colorValue` (key 37). |
+| `RML009` | warn | State machine with no layer. |
+| `RML011` | warn | An input nothing reads. |
+| `RML012` | warn | A transition into a one-frame pose with no mix time: it teleports. |
+| `RML013` | warn | A `loop` that pops at its seam (full turns of rotation count as closed). |
 
 ## `rive inspect` problem kinds worth knowing
 
